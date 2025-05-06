@@ -22,8 +22,8 @@ private:
 
     vector<vector<int>> cur_result[2];
 
-    vector<bool> incorrect_columns;
-    vector<bool> incorrect_rows;
+    vector<bool> incorrect[2];
+
 
 public:
     vector<vector<int>> hints[2];
@@ -33,6 +33,7 @@ public:
 
     //
     bool isSolved();
+	bool isRowOrColumnSolved(int grid_x, int grid_y);
     void compareResultWithHints();
     void resultUpdate(int grid_x, int grid_y);
 

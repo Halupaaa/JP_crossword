@@ -1,8 +1,7 @@
 #include "Grid.h"
+#include "Design.h"
 
 #include <iostream>
-
-#include "Design.h"
 
 Grid::Grid():field_width(0), cell_size(0) {}
 
@@ -35,10 +34,10 @@ Grid::Grid(int field_width, vector<vector<int>> hints[])
     cur_result[0] = vector<vector<int>>(field_width);
     cur_result[1] = vector<vector<int>>(field_width);
 
-    incorrect_columns = vector<bool>(field_width, false);
-    incorrect_rows = vector<bool>(field_width, false);
-}
+	incorrect[0] = vector<bool>(field_width, false); //column
+	incorrect[1] = vector<bool>(field_width, false); //row
 
+}
 
 bool Grid::isSolved()
 {
@@ -49,12 +48,53 @@ bool Grid::isSolved()
     return true;
 }
 
+bool Grid::isRowOrColumnSolved(int x, int y)
+{
+    vector<int> col = cur_result[0][x];
+    vector<int> row = cur_result[1][y];
+
+    reverse(col.begin(), col.end());
+    reverse(row.begin(), row.end());
+
+    return col == hints[0][x] || row == hints[1][y];
+}
+
 void Grid::compareResultWithHints()
 {
+    auto compareAgainstReversedHintByMax = [](const vector<int>& result, const vector<int>& hint) -> bool {
+        vector<int> reversed_hint = hint;
+        reverse(reversed_hint.begin(), reversed_hint.end());
+
+        vector<bool> used(reversed_hint.size(), false);
+
+        for (int block : result)
+        {
+            bool matched = false;
+            int max_val = -1;
+            int max_idx = -1;
+
+            // знайти найб≥льший ще не використаний елемент у reversed_hint, €кий >= block
+            for (int i = 0; i < reversed_hint.size(); ++i)
+            {
+                if (!used[i] && reversed_hint[i] >= block && reversed_hint[i] > max_val)
+                {
+                    max_val = reversed_hint[i];
+                    max_idx = i;
+                }
+            }
+
+            if (max_idx != -1)
+				used[max_idx] = true; // позначити €к використаний
+            else
+            	return true; // немаЇ в≥дпов≥дного Ч помилка
+        }
+        return false; // усе гаразд
+    };
+
     for (int i = 0; i < field_width; i++)
     {
-        incorrect_columns[i] = (cur_result[0][i] > hints[0][i]);
-        incorrect_rows[i] = (cur_result[1][i] > hints[1][i]);
+        incorrect[0][i] = compareAgainstReversedHintByMax(cur_result[0][i], hints[0][i]); // стовпц≥
+        incorrect[1][i] = compareAgainstReversedHintByMax(cur_result[1][i], hints[1][i]); // р€дки
     }
 }
 
@@ -169,6 +209,26 @@ void Grid::drawGrid()
             	float text_y = cell.getPosition().y + (cell_size - text.getCharacterSize()) / 2.f;
             	text.setPosition(Vector2f(text_x, text_y - 5.f)); 
                 Design::Window->draw(text);
+
+            	//
+                int x = i - max_sizes[1];
+                int y = j - max_sizes[0];
+				if ((x >= 0 && x < field_width && y >= 0 && y < field_width) && isRowOrColumnSolved(x, y))
+				{
+					
+
+					Vertex line1[] = {
+						Vertex(Vector2f(cell.getPosition().x, cell.getPosition().y), Design::CrossColor),
+						Vertex(Vector2f(cell.getPosition().x + cell_size, cell.getPosition().y + cell_size), Design::CrossColor)
+					};
+					Vertex line2[] = {
+						Vertex(Vector2f(cell.getPosition().x + cell_size, cell.getPosition().y), Design::CrossColor),
+						Vertex(Vector2f(cell.getPosition().x, cell.getPosition().y + cell_size), Design::CrossColor)
+					};
+					Design::Window->draw(line1, 2, Lines);
+					Design::Window->draw(line2, 2, Lines);
+				}
+				
             }
             else
             {
@@ -182,7 +242,7 @@ void Grid::drawGrid()
                 {
 	                cell.setFillColor(Design::GameCellColor);
 
-                	if (incorrect_columns[x] || incorrect_rows[y])
+                	if (incorrect[0][x] || incorrect[1][y])
 						cell.setFillColor(Design::IncorrectCellColor);
                 }
 
@@ -190,7 +250,7 @@ void Grid::drawGrid()
                 cell.setOutlineThickness(2);
                 Design::Window->draw(cell);
 
-            	if (cell_states[y][x] == 2)
+            	if (cell_states[y][x] == 2 || isRowOrColumnSolved(x, y))
                 {
                     Vertex line1[] = {
                         Vertex(Vector2f(cell.getPosition().x, cell.getPosition().y), Design::CrossColor),

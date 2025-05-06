@@ -19,7 +19,7 @@ int main()
 
     while (game.running())
     {
-		Grid& temp_grid = grid_10;
+		Grid& temp_grid = grid_5;
 
         game.update(temp_grid);
 

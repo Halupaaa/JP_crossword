@@ -16,6 +16,7 @@ const Color Design::FilledCellColor = Color(20, 20, 20);
 const Color Design::GridOutlineColor = Color(0, 0, 0);
 const Color Design::CrossColor = Color(20, 20, 20);
 
+const Color Design::IncorrectCellColor = Color(173, 168, 168);
 */
 /*dark pricolne
 const Color Design::BackgroundColor = Color(24, 26, 32);
@@ -29,9 +30,9 @@ const Color Design::FilledCellColor = Color(225, 195, 120);
 const Color Design::GridOutlineColor = Color(100, 100, 110);
 const Color Design::CrossColor = Color(225, 195, 120);
 
+const Color Design::IncorrectCellColor = Color(140, 120, 76);
 */
-
-/*sacura milashka*/
+/*sacura milashka
 
  const Color Design::BackgroundColor = Color(250, 245, 242);
 
@@ -45,10 +46,9 @@ const Color Design::GridOutlineColor = Color(140, 100, 110);
 const Color Design::CrossColor = Color(200, 120, 140);
 
 const Color Design::IncorrectCellColor = Color(189, 175, 175);
-const Color Design::IncorrectOutlineColor = Color(200, 120, 140);
+*/
 
-
-/* pricolna sacura
+/* pricolna sacura*/
 const Color Design::BackgroundColor = Color(245, 235, 220);
 
 const Color Design::HintTextColor = Color(100, 40, 30);
@@ -59,10 +59,12 @@ const Color Design::GameCellColor = Color(255, 235, 215);
 const Color Design::FilledCellColor = Color(120, 30, 30);
 const Color Design::GridOutlineColor = Color(140, 60, 50);
 const Color Design::CrossColor = Color(120, 30, 30);
-*/
+
+const Color Design::IncorrectCellColor = Color(209, 182, 176);
 
 
 /*  Like a game nintendo pricolnaya
+
  const Color Design::BackgroundColor = Color(20, 18, 26);
 
 const Color Design::HintTextColor = Color(255, 210, 140);
@@ -74,5 +76,6 @@ const Color Design::FilledCellColor = Color(255, 90, 90);
 const Color Design::GridOutlineColor = Color(255, 190, 120);
 const Color Design::CrossColor = Color(255, 130, 100);
 
-*/
+const Color Design::IncorrectCellColor = Color(92, 31, 31);
 
+*/

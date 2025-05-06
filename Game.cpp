@@ -32,6 +32,7 @@ void Game::update(Grid& grid)
 {
     pollEvents (grid);
     grid.compareResultWithHints();
+
 }
 
 void Game::render(Grid& grid)

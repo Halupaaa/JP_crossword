@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JP_crossword", "JP_crossword.vcxproj", "{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Debug|x64.ActiveCfg = Debug|x64
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Debug|x64.Build.0 = Debug|x64
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Debug|x86.ActiveCfg = Debug|Win32
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Debug|x86.Build.0 = Debug|Win32
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Release|x64.ActiveCfg = Release|x64
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Release|x64.Build.0 = Release|x64
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Release|x86.ActiveCfg = Release|Win32
+		{9AFAC3EB-5C7B-44A0-A4C3-D3085CA85DE6}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2235E3D-EDF2-4CF6-9748-41D67F4B97DC}
+	EndGlobalSection
+EndGlobal

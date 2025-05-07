@@ -1,6 +1,6 @@
 #include "Grid.h"
 #include "Design.h"
-
+#include <algorithm>
 #include <iostream>
 
 Grid::Grid():field_width(0), cell_size(0) {}
@@ -41,9 +41,24 @@ Grid::Grid(int field_width, vector<vector<int>> hints[])
 
 bool Grid::isSolved()
 {
+    for (int k = 0; k < 2; k++)
+    {
+        for (const auto& vec : cur_result[k]) 
+        {
+            if (find(vec.begin(), vec.end(), 0) != vec.end()) 
+				return false;
+        }
+    }
+
     for (int i = 0; i < field_width; i++)
     {
-        if (cur_result[0][i] != hints[0][i] && cur_result[1][i] != hints[1][i]) return false;
+        vector<int> col = cur_result[0][i];
+        vector<int> row = cur_result[1][i];
+
+        reverse(col.begin(), col.end());
+        reverse(row.begin(), row.end());
+
+        if (col != hints[0][i] || row != hints[1][i]) return false;
     }
     return true;
 }
@@ -59,7 +74,8 @@ bool Grid::isRowOrColumnSolved(int x, int y)
     return col == hints[0][x] || row == hints[1][y];
 }
 
-void Grid::compareResultWithHints()
+
+/*void Grid::compareResultWithHints()
 {
     auto compareAgainstReversedHintByMax = [](const vector<int>& result, const vector<int>& hint) -> bool {
         vector<int> reversed_hint = hint;
@@ -95,6 +111,15 @@ void Grid::compareResultWithHints()
     {
         incorrect[0][i] = compareAgainstReversedHintByMax(cur_result[0][i], hints[0][i]); // стовпці
         incorrect[1][i] = compareAgainstReversedHintByMax(cur_result[1][i], hints[1][i]); // рядки
+    }
+}*/
+
+void Grid::compareResultWithHints()
+{
+    for (int i = 0; i < field_width; i++)
+    {
+        incorrect[0][i] = (cur_result[0][i] > hints[0][i]);
+        incorrect[1][i] = (cur_result[1][i] > hints[1][i]);
     }
 }
  
@@ -252,137 +277,3 @@ void Grid::drawGrid()
         }
     }
 }
-
-/*
-void Grid::drawGrid()
-{
-    RectangleShape cell(Vector2f(cell_size, cell_size));
-
-    text_hint text_hint_obj; // Renamed to avoid conflict with sf::text_hint if used as a type
-    text_hint_obj.setFont(font);
-    text_hint_obj.setCharacterSize(static_cast<unsigned int>(cell_size * 0.75f)); // Adjusted size slightly, ensure it's unsigned
-    text_hint_obj.setFillColor(Design::Hinttext_hintColor);
-
-    for (int i = 0; i < width; ++i) // `width` is total grid columns (game + left_hints_width)
-    {
-        for (int j = 0; j < height; ++j) // `height` is total grid rows (game + top_hints_height)
-        {
-            cell.setPosition(Vector2f(center_x + i * cell_size, center_y + j * cell_size));
-
-            // Calculate coordinates relative to the game grid's top-left corner
-            // These can be negative if (i,j) is in the hint area.
-            int game_coord_x = i - max_sizes[1]; // max_sizes[1] is width of left hint area
-            int game_coord_y = j - max_sizes[0]; // max_sizes[0] is height of top hint area
-
-            if (i < max_sizes[1] || j < max_sizes[0]) // Current cell (i,j) is in a hint area or the corner
-            {
-                cell.setFillColor(Design::HintCellColor);
-                cell.setOutlineColor(Design::HintCellOutlineColor);
-                cell.setOutlineThickness(3);
-                Design::Window->draw(cell);
-
-                std::string current_hint_str = "";
-                bool draw_cross_on_this_hint = false;
-
-                if (i >= max_sizes[1] && j < max_sizes[0]) // Top hints area (for game columns)
-                {
-                    int game_col_idx = game_coord_x; // This is the actual game column index
-                    int hint_num_pos = (max_sizes[0] - 1) - j; // Position of hint number in the vertical display
-
-                    if (game_col_idx >= 0 && game_col_idx < field_width && // Check game_col_idx is valid
-                        hints[0].size() > game_col_idx &&
-                        hint_num_pos >= 0 && hint_num_pos < (int)hints[0][game_col_idx].size())
-                    {
-                        current_hint_str = to_string(hints[0][game_col_idx][hint_num_pos]);
-                    }
-
-                    // Check if the corresponding game column is solved
-                    if (isRowOrColumnSolved(0, game_col_idx)) {
-                        draw_cross_on_this_hint = true;
-                    }
-                }
-                else if (i < max_sizes[1] && j >= max_sizes[0]) // Left hints area (for game rows)
-                {
-                    int game_row_idx = game_coord_y; // This is the actual game row index
-                    int hint_num_pos = (max_sizes[1] - 1) - i; // Position of hint number in the horizontal display
-
-                    if (game_row_idx >= 0 && game_row_idx < field_width && // Check game_row_idx is valid
-                        hints[1].size() > game_row_idx &&
-                        hint_num_pos >= 0 && hint_num_pos < (int)hints[1][game_row_idx].size())
-                    {
-                        current_hint_str = to_string(hints[1][game_row_idx][hint_num_pos]);
-                    }
-
-                    // Check if the corresponding game row is solved
-                    if (isRowOrColumnSolved(game_row_idx, 0))
-                    {
-                        draw_cross_on_this_hint = true;
-                    }
-                }
-                // Else, it's the top-left empty corner: current_hint_str remains "", draw_cross_on_this_hint remains false
-
-                if (!current_hint_str.empty()) {
-                    text_hint_obj.setString(current_hint_str);
-                    // Center text_hint_obj in the cell
-                    sf::FloatRect text_hintBounds = text_hint_obj.getLocalBounds();
-                    float text_hint_x_pos = cell.getPosition().x + (cell_size - text_hintBounds.width) / 2.f - text_hintBounds.left;
-                    float text_hint_y_pos = cell.getPosition().y + (cell_size - text_hintBounds.height) / 2.f - text_hintBounds.top - cell_size * 0.05f; // Small vertical adjustment
-                    text_hint_obj.setPosition(text_hint_x_pos, text_hint_y_pos);
-                    Design::Window->draw(text_hint_obj);
-                }
-
-                if (draw_cross_on_this_hint) {
-                    Vertex line1[] = {
-                        Vertex(Vector2f(cell.getPosition().x + cell_size * 0.1f, cell.getPosition().y + cell_size * 0.1f), Design::CrossColor),
-                        Vertex(Vector2f(cell.getPosition().x + cell_size * 0.9f, cell.getPosition().y + cell_size * 0.9f), Design::CrossColor)
-                    };
-                    Vertex line2[] = {
-                        Vertex(Vector2f(cell.getPosition().x + cell_size * 0.9f, cell.getPosition().y + cell_size * 0.1f), Design::CrossColor),
-                        Vertex(Vector2f(cell.getPosition().x + cell_size * 0.1f, cell.getPosition().y + cell_size * 0.9f), Design::CrossColor)
-                    };
-                    Design::Window->draw(line1, 2, Lines);
-                    Design::Window->draw(line2, 2, Lines);
-                }
-            }
-            else // Game grid area
-            {
-                // Here, game_coord_x and game_coord_y are the 0-indexed coordinates for the game field.
-                // They should be within [0, field_width-1] because of the loop bounds and the `else` condition.
-                // For safety, an explicit check can be added, but it should hold true.
-                // if (game_coord_x >= 0 && game_coord_x < field_width && game_coord_y >= 0 && game_coord_y < field_width)
-
-                if (cell_states[game_coord_y][game_coord_x] == 1) { // Filled
-                    cell.setFillColor(Design::FilledCellColor);
-                }
-                else { // Empty or crossed
-                    cell.setFillColor(Design::GameCellColor); // Default for empty
-                    // Check for incorrect row/column only if the cell isn't manually crossed out (state 2)
-                    if (cell_states[game_coord_y][game_coord_x] != 2) {
-                        if (incorrect[0][game_coord_x] || incorrect[1][game_coord_y]) {
-                            cell.setFillColor(Design::IncorrectCellColor);
-                        }
-                    }
-                }
-
-                cell.setOutlineColor(Design::GridOutlineColor);
-                cell.setOutlineThickness(2);
-                Design::Window->draw(cell);
-
-                if (cell_states[game_coord_y][game_coord_x] == 2 || isRowOrColumnSolved(game_coord_x, game_coord_y)) {
-                    Vertex line1[] = {
-                        Vertex(Vector2f(cell.getPosition().x, cell.getPosition().y), Design::CrossColor),
-                        Vertex(Vector2f(cell.getPosition().x + cell_size, cell.getPosition().y + cell_size), Design::CrossColor)
-                    };
-                    Vertex line2[] = {
-                        Vertex(Vector2f(cell.getPosition().x + cell_size, cell.getPosition().y), Design::CrossColor),
-                        Vertex(Vector2f(cell.getPosition().x, cell.getPosition().y + cell_size), Design::CrossColor)
-                    };
-                    Design::Window->draw(line1, 2, Lines);
-                    Design::Window->draw(line2, 2, Lines);
-                }
-            }
-        }
-    }
-}
-
- */

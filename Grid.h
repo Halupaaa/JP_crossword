@@ -38,6 +38,6 @@ public:
     void resultUpdate(int grid_x, int grid_y);
 
     void handleClick(Vector2i mousePos, bool fill);
-    void drawGrid();
+    void draw();
 };
 

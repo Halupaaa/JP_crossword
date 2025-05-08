@@ -3,10 +3,14 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Grid.h"
+#include "Menu.h"
 
 class Game
 {
+	Menu menu;
 public:
+	Game();
+
 	const bool running() const;
 
 	void pollEvents(Grid& grid);

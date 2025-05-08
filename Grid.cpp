@@ -3,11 +3,14 @@
 #include <algorithm>
 #include <iostream>
 
-Grid::Grid():field_width(0), cell_size(0) {}
+Grid::Grid() : field_width(0), cell_size(0), width(0), height(0), center_x(0), center_y(0) {
+    max_sizes[0] = 0;
+    max_sizes[1] = 0;
+}
 
 Grid::Grid(int field_width, vector<vector<int>> hints[])
 {
-    font.loadFromFile("fonts/MEDIO_VINTAGE.otf");
+    font.loadFromFile("fonts/Groovy_Vibes2.otf");
 
     this->field_width = field_width;
 
@@ -179,7 +182,7 @@ void Grid::handleClick(Vector2i mousePos, bool filled)
     }
 }
 
-void Grid::drawGrid()
+void Grid::draw()
 {
     RectangleShape cell(Vector2f(cell_size, cell_size));
 

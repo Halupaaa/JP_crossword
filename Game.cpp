@@ -1,9 +1,12 @@
 #include "Game.h"
-
+#include "Design.h"
 #include <iostream>
 
-#include "Design.h"
-#include "Grid.h"
+
+Game::Game()
+{
+	this->menu = Menu();
+}
 
 const bool Game::running() const
 {
@@ -40,7 +43,8 @@ void Game::render(Grid& grid)
     Design::Window->clear(Color(Design::BackgroundColor));
 
     //draw frames
-    grid.drawGrid();
+    //grid.draw();
+    menu.draw();
 
     Design::Window->display();
 }

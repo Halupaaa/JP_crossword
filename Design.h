@@ -8,6 +8,9 @@ struct Design
 {
     static RenderWindow* Window;
 
+    static const Color MenuTextColor;
+	static const Color MenuButtonColor;
+
     static const Color BackgroundColor;
 
     static const Color HintTextColor;

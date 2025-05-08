@@ -1,8 +1,10 @@
 #include <iostream>
 #include <fstream>
-#include "//dependencies//include/nlohmann/json.hpp"
-using json = nlohmann::json;
 #include"Game.h"
+#include "Design.h"
+#include "dependencies/include/nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 struct GridHints {
     int size;
@@ -13,13 +15,18 @@ struct GridHints {
 int main()
 {
     json info_hints;
-	ifstream file("hints.json");
+	ifstream file("crossword_hints.json");
 
     Game game;
 
-    while (game.running())
+    vector<vector<int>> hints_5_5[2] = { {{4},{3},{3},{3},{4}},{{1,1},{5},{5},{1,1,1},{1,1}} };
+
+	Grid grid_5_5 = Grid(5, hints_5_5);
+
+	Grid& temp_grid = grid_5_5;
+
+    while (game.running()) 
     {
-		Grid& temp_grid = grid_15_5;
 
         game.update(temp_grid);
 
@@ -30,9 +37,8 @@ int main()
 	        cout << "NICEEEE PErerobi ozhu huinu" << endl;
 			//break;
         }
-
-
     }
+    return 0;
 }
 
 /*
@@ -79,4 +85,7 @@ int main()
 
     vector<vector<int>>hints_15_5[2] = { {{1},{1,1,1},{2,1,2},{1,1,2},{2,6},{1,1,5,1},{8,2},{4,4},{1,5,2},{8,2},{8},{1,6},{1,2},{1,2},{1,1}},
     {{},{},{4},{6},{2,1,1},{3,2,1},{6,5},{14},{8},{8},{6},{1,1,4},{4,2,2},{3},{2,2}}};
-    */
+
+ vector<vector<int>>hints_15_5[2] = { {{1},{1,1,1},{2,1,2},{1,1,2},{2,6},{1,1,5,1},{8,2},{4,4},{1,5,2},{8,2},{8},{1,6},{1,2},{1,2},{1,1}},
+    {{},{},{4},{6},{2,1,1},{3,2,1},{6,5},{14},{8},{8},{6},{1,1,4},{4,2,2},{3},{2,2}} };
+*/

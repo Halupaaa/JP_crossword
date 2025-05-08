@@ -2,22 +2,6 @@
 
 RenderWindow* Design::Window = new RenderWindow(VideoMode({ 1400, 940 }), "JCross", Style::Close | Style::Titlebar);
 
-/*like a real jap cros
-
-const Color Design::BackgroundColor = Color(245, 243, 235);
-
-const Color Design::HintTextColor = Color(40, 40, 40);
-const Color Design::HintCellColor = Color(230, 225, 210);
-const Color Design::HintCellOutlineColor = Color(0, 0, 0);
-
-
-const Color Design::GameCellColor = Color(220, 220, 220);
-const Color Design::FilledCellColor = Color(20, 20, 20);
-const Color Design::GridOutlineColor = Color(0, 0, 0);
-const Color Design::CrossColor = Color(20, 20, 20);
-
-const Color Design::IncorrectCellColor = Color(173, 168, 168);
-*/
 /*dark pricolne
 const Color Design::BackgroundColor = Color(24, 26, 32);
 
@@ -49,6 +33,9 @@ const Color Design::IncorrectCellColor = Color(189, 175, 175);
 */
 
 /* pricolna sacura*/
+const Color Design::MenuTextColor = Color(200, 100, 120);
+const Color Design::MenuButtonColor = Color(255, 230, 235);
+
 const Color Design::BackgroundColor = Color(245, 235, 220);
 
 const Color Design::HintTextColor = Color(100, 40, 30);

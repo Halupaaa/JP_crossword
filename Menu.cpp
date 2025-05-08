@@ -12,7 +12,7 @@ Menu::Menu() {
     font.loadFromFile("fonts/Masa_Groovy.ttf");
 }
 
-void Menu::initialize()
+void Menu::startMenu()
 {
     titleText.setFont(font);
     titleText.setString("jp crosswords");
@@ -41,14 +41,37 @@ void Menu::initialize()
     exitBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
 }
 
-void Menu::draw()
+void Menu::navMenu()
 {
-    initialize();
+    titleText.setString("");
+
+    Vector2f buttonSize(400.f, 80.f);
+    Color boxColor(Design::MenuButtonColor);
+    Color outlineColor(Design::MenuTextColor);
+    Color textColor(Design::MenuTextColor);
+    Font& f = font;
+
+    playBtn = Button("play", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
+    aboutBtn = Button("about", Design::Window->getSize().y / 2.f, font, buttonSize);
+    exitBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
+}
+
+int Menu::handleClick(Vector2i mousePos)
+{
+    if (playBtn.isClicked(mousePos)) return 1;
+    else if (aboutBtn.isClicked(mousePos)) return 2;
+    else if (exitBtn.isClicked(mousePos)) return 3;
+    else return 0;
+}
+
+void Menu::draw(char menu_or_grid)
+{
+	if (menu_or_grid == 's') startMenu();
+	else if (menu_or_grid == 'n') navMenu();
 
     Design::Window->draw(backgroundSprite);
 	Design::Window->draw(titleText);
     playBtn.draw();
     aboutBtn.draw();
     exitBtn.draw();
-
 }

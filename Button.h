@@ -12,8 +12,9 @@ private:
 
 public:
     Button();
-
     Button(const string& text, float yPos, Font& f, Vector2f buttonSize);
+
+    bool isClicked(Vector2i mousePos);
 
     void draw();
 };

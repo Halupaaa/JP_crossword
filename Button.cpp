@@ -28,6 +28,12 @@ Button::Button( const string& text, float yPos, Font& f, Vector2f buttonSize)
     box.setOutlineThickness(3);
 };
 
+bool Button::isClicked(Vector2i mousePos)
+{
+    return box.getGlobalBounds().contains((Vector2f)mousePos);
+}
+
+
 void Button::draw()
 {
     Design::Window->draw(box);

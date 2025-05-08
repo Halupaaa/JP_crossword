@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <ctime>
 #include"Game.h"
-#include "Design.h"
 #include "dependencies/include/nlohmann/json.hpp"
 
 using json = nlohmann::json;
@@ -12,31 +13,62 @@ struct GridHints {
     vector<vector<int>> left_hints;
 };
 
+Grid generateRandomGrid(json info_hints)
+{
+    int selected_index = rand() % info_hints["grids"].size();
+
+    json selected_grid = info_hints["grids"][selected_index];
+
+    int size = selected_grid["size"];
+    vector<vector<int>> hints[2] = {
+        selected_grid["top_hints"].get<vector<vector<int>>>(),
+        selected_grid["left_hints"].get<vector<vector<int>>>()
+    };
+	Grid grid(size, hints);
+    return grid;
+}
+
 int main()
 {
+	srand(time(0));
+
+    ifstream file("crossword_hints.json");
+    if (!file.is_open()) {
+        cerr << "File is not open!" << endl;
+        return 1;
+    }
+
     json info_hints;
-	ifstream file("crossword_hints.json");
+    file >> info_hints;
+    file.close();
 
     Game game;
 
-    vector<vector<int>> hints_5_5[2] = { {{4},{3},{3},{3},{4}},{{1,1},{5},{5},{1,1,1},{1,1}} };
-
-	Grid grid_5_5 = Grid(5, hints_5_5);
-
-	Grid& temp_grid = grid_5_5;
+    Grid temp_grid = Grid();
 
     while (game.running()) 
     {
-
-        game.update(temp_grid);
-
+		game.update(temp_grid);
         game.render(temp_grid);
 
-        if (temp_grid.isSolved())
+        while (game.menu_or_grid == 'g')
         {
-	        cout << "NICEEEE PErerobi ozhu huinu" << endl;
-			//break;
+            temp_grid = generateRandomGrid(info_hints);
+            game.update(temp_grid);
+
+            while (!temp_grid.isSolved())
+            {
+                game.update(temp_grid);
+                game.render(temp_grid);
+            }
+            if (temp_grid.isSolved())
+            {
+				game.menu_or_grid = 'n';
+				game.menu.navMenu();
+
+            }
         }
+        
     }
     return 0;
 }

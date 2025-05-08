@@ -17,6 +17,11 @@ private:
 
 public:
     Menu();
-    void initialize();
-    void draw();
+
+    void startMenu();
+    void navMenu();
+
+    int handleClick(Vector2i mousePos);
+
+    void draw(char menu_or_grid);
 };

@@ -7,8 +7,11 @@
 
 class Game
 {
-	Menu menu;
+
 public:
+	Menu menu;
+	char menu_or_grid;
+
 	Game();
 
 	const bool running() const;

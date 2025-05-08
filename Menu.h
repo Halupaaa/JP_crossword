@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Button.h"
+#include "GameState.h"
+
 
 using namespace sf;
 
@@ -11,17 +13,19 @@ private:
     Texture backgroundTexture;
     Sprite backgroundSprite;
 
-
     Text titleText;
-    Button playBtn, aboutBtn, exitBtn;
+    Text mainText;
+    Button firstBtn, secondBtn, thirdBtn;
 
 public:
     Menu();
 
     void startMenu();
+    void infoMenu();
+    void categoryMenu();
     void navMenu();
 
     int handleClick(Vector2i mousePos);
 
-    void draw(char menu_or_grid);
+    void draw(GameState state);
 };

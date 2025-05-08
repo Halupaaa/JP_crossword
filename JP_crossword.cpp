@@ -7,15 +7,23 @@
 
 using json = nlohmann::json;
 
-struct GridHints {
+struct GridHints
+{
     int size;
     vector<vector<int>> top_hints;
     vector<vector<int>> left_hints;
 };
 
-Grid generateRandomGrid(json info_hints)
+Grid generateRandomGrid(json info_hints, int grid_size)
 {
-    int selected_index = rand() % info_hints["grids"].size();
+    int selected_index;
+    switch (grid_size)
+    {
+		case 5: selected_index = rand() % 5; break;
+		case 10: selected_index = rand() % 5 + 5; break;
+		case 15: selected_index = rand() % 5 + 10; break;
+		default: selected_index = 0; break;
+    }
 
     json selected_grid = info_hints["grids"][selected_index];
 
@@ -46,30 +54,18 @@ int main()
 
     Grid temp_grid = Grid();
 
-    while (game.running()) 
+    while (game.running())
     {
-		game.update(temp_grid);
-        game.render(temp_grid);
-
-        while (game.menu_or_grid == 'g')
+        if (game.state == GameState::NeedToGenerateGrid) 
         {
-            temp_grid = generateRandomGrid(info_hints);
-            game.update(temp_grid);
-
-            while (!temp_grid.isSolved())
-            {
-                game.update(temp_grid);
-                game.render(temp_grid);
-            }
-            if (temp_grid.isSolved())
-            {
-				game.menu_or_grid = 'n';
-				game.menu.navMenu();
-
-            }
+            temp_grid = generateRandomGrid(info_hints, game.grid_size);
+            game.state = GameState::Game;
         }
-        
+
+        game.update(temp_grid);
+        game.render(temp_grid);
     }
+
     return 0;
 }
 

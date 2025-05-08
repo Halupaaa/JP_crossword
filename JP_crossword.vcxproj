@@ -138,6 +138,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Design.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="JP_crossword.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Design.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>

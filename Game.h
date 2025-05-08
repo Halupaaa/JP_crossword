@@ -5,12 +5,14 @@
 #include "Grid.h"
 #include "Menu.h"
 
+
 class Game
 {
-
 public:
+
 	Menu menu;
-	char menu_or_grid;
+	GameState state;
+	int grid_size;
 
 	Game();
 

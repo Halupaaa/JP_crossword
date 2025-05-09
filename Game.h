@@ -1,10 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-
 #include "Grid.h"
 #include "Menu.h"
-
 
 class Game
 {

@@ -1,7 +1,4 @@
 #include "Game.h"
-#include "Design.h"
-#include <iostream>
-
 
 Game::Game()
 {
@@ -99,7 +96,7 @@ void Game::update(Grid& grid)
     grid.compareResultWithHints();
     if (state == GameState::Game && grid.isSolved()) 
     {
-        state = GameState::NavigationMenu;
+        state = GameState::WinningNavigationMenu;
         menu.navMenu();
     }
 
@@ -110,10 +107,13 @@ void Game::render(Grid& grid)
     Design::Window->clear(Color(Design::BackgroundColor));
 
     //draw frames
-	if (state == GameState::StartMenu || state == GameState::NavigationMenu 
-        || state == GameState::CategoryMenu || state == GameState::InfoMenu
-        || state == GameState::WinningNavigationMenu) menu.draw(state);
-
+	if (state == GameState::StartMenu || state == GameState::CategoryMenu || state == GameState::InfoMenu ) 
+        menu.draw(state);
+    else if (state == GameState::NavigationMenu || state == GameState::WinningNavigationMenu)
+    {
+        grid.draw();
+        menu.draw(state);
+    }
 	else grid.draw();
 
     Design::Window->display();

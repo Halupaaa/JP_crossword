@@ -12,6 +12,8 @@ Menu::Menu()
 
 void Menu::startMenu()
 {
+    backgroundSprite.setColor(Design::MenuButtonColor);
+
     titleText.setString("");
 
     mainText.setFont(font);
@@ -43,6 +45,8 @@ void Menu::startMenu()
 
 void Menu::infoMenu()
 {
+    backgroundSprite.setColor(Design::MenuButtonColor);
+
 	titleText.setFont(font);
 	titleText.setString("How to Play Japanese Crosswords?");
 	titleText.setCharacterSize(70);
@@ -81,6 +85,8 @@ void Menu::infoMenu()
 
 void Menu::categoryMenu()
 {
+    backgroundSprite.setColor(Design::MenuButtonColor);
+
     titleText.setString("");
 
     mainText.setFont(font);
@@ -115,6 +121,8 @@ void Menu::navMenu()
 
     mainText.setString("");
 
+    backgroundSprite.setColor(Design::TransparentColor);
+
     FloatRect titleTextBounds = mainText.getLocalBounds();
     mainText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
     mainText.setPosition(Design::Window->getSize().x / 2.f, 200);
@@ -134,10 +142,11 @@ void Menu::winNavMenu()
     titleText.setString("");
 
     mainText.setFont(font);
-    mainText.setString("NICEEEE ;))");
+    mainText.setString("cool");
     mainText.setCharacterSize(140);
     mainText.setFillColor(Design::MenuTextColor);
 
+    backgroundSprite.setColor(Design::TransparentColor);
 
     FloatRect titleTextBounds = mainText.getLocalBounds();
     mainText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);

@@ -36,6 +36,8 @@ const Color Design::IncorrectCellColor = Color(189, 175, 175);
 const Color Design::MenuTextColor = Color(200, 100, 120);
 const Color Design::MenuButtonColor = Color(255, 230, 235);
 
+const Color Design::TransparentColor = Color(0, 0, 0,100);
+
 const Color Design::BackgroundColor = Color(245, 235, 220);
 
 const Color Design::HintTextColor = Color(100, 40, 30);

@@ -23,4 +23,5 @@ struct Design
     static const Color CrossColor;
 
     static const Color IncorrectCellColor;
+    static const Color TransparentColor;
 };

@@ -1,7 +1,7 @@
 #include "Grid.h"
 #include "Design.h"
 #include <algorithm>
-#include <iostream>
+
 
 Grid::Grid() : field_width(0), cell_size(0), width(0), height(0), center_x(0), center_y(0)
 {
@@ -243,7 +243,6 @@ void Grid::draw()
                 float text_hint_y = cell.getPosition().y + (cell_size - text_hintBounds.height) / 2.f - text_hintBounds.top - cell_size * 0.05f;
             	text_hint.setPosition(Vector2f(text_hint_x, text_hint_y)); 
                 Design::Window->draw(text_hint);
-				
             }
             else
             {
@@ -280,13 +279,14 @@ void Grid::draw()
             }
         }
     }
+
     Text enterText;
     enterText.setFont(font);
     enterText.setString("Press ENTER \nto navigate");
-    enterText.setCharacterSize(20);
-    enterText.setFillColor(Design::MenuTextColor);
+    enterText.setCharacterSize(22);
+    enterText.setFillColor(Design::TransparentColor);
     FloatRect titleTextBounds = enterText.getLocalBounds();
     enterText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
-    enterText.setPosition(19.f * Design::Window->getSize().x / 20.f, 30);
+    enterText.setPosition(Design::Window->getSize().x - 80, 30);
     Design::Window->draw(enterText);
 }

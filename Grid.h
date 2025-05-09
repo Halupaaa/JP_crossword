@@ -1,7 +1,10 @@
 #pragma once
-#include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <vector>
+#include <algorithm>
+#include "Design.h"
+
 
 using namespace sf;
 using namespace std;

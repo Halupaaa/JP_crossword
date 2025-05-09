@@ -74,6 +74,16 @@ void Game::pollEvents(Grid& grid)
                 else if (result == 3) state = GameState::StartMenu;
                 
             }
+            else if (state == GameState::WinningNavigationMenu)
+            {
+                result = menu.handleClick(mousePos);
+                if (result == 1)
+                {
+                    state = GameState::CategoryMenu;
+                }
+                else if (result == 2) state = GameState::StartMenu;
+                else if (result == 3) Design::Window->close();
+            }
             else
             {
 	            if (event.mouseButton.button == Mouse::Left) grid.handleClick(mousePos, true);
@@ -101,7 +111,8 @@ void Game::render(Grid& grid)
 
     //draw frames
 	if (state == GameState::StartMenu || state == GameState::NavigationMenu 
-        || state == GameState::CategoryMenu || state == GameState::InfoMenu) menu.draw(state);
+        || state == GameState::CategoryMenu || state == GameState::InfoMenu
+        || state == GameState::WinningNavigationMenu) menu.draw(state);
 
 	else grid.draw();
 

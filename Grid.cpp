@@ -43,11 +43,6 @@ Grid::Grid(int field_width, vector<vector<int>> hints[])
 
 }
 
-bool Grid::isEmpty()
-{
-    return field_width == 0;
-}
-
 bool Grid::isSolved()
 {
     for (int k = 0; k < 2; k++)
@@ -285,4 +280,13 @@ void Grid::draw()
             }
         }
     }
+    Text enterText;
+    enterText.setFont(font);
+    enterText.setString("Press ENTER \nto navigate");
+    enterText.setCharacterSize(20);
+    enterText.setFillColor(Design::MenuTextColor);
+    FloatRect titleTextBounds = enterText.getLocalBounds();
+    enterText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
+    enterText.setPosition(19.f * Design::Window->getSize().x / 20.f, 30);
+    Design::Window->draw(enterText);
 }

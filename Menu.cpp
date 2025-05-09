@@ -113,6 +113,26 @@ void Menu::navMenu()
 {
     titleText.setString("");
 
+    mainText.setString("");
+
+    FloatRect titleTextBounds = mainText.getLocalBounds();
+    mainText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
+    mainText.setPosition(Design::Window->getSize().x / 2.f, 200);
+
+    Vector2f buttonSize(400.f, 80.f);
+    Color boxColor(Design::MenuButtonColor);
+    Color outlineColor(Design::MenuTextColor);
+    Color textColor(Design::MenuTextColor);
+    Font& f = font;
+
+    firstBtn = Button("continue", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
+    secondBtn = Button("new game", Design::Window->getSize().y / 2.f, font, buttonSize);
+    thirdBtn = Button("start menu", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
+}
+void Menu::winNavMenu()
+{
+    titleText.setString("");
+
     mainText.setFont(font);
     mainText.setString("NICEEEE ;))");
     mainText.setCharacterSize(140);
@@ -129,9 +149,9 @@ void Menu::navMenu()
     Color textColor(Design::MenuTextColor);
     Font& f = font;
 
-    firstBtn = Button("continue", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
-    secondBtn = Button("new game", Design::Window->getSize().y / 2.f, font, buttonSize);
-    thirdBtn = Button("start menu", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
+    firstBtn = Button("new game", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
+    secondBtn = Button("start menu", Design::Window->getSize().y / 2.f, font, buttonSize);
+    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
 }
 
 int Menu::handleClick(Vector2i mousePos)
@@ -150,6 +170,7 @@ void Menu::draw(GameState state)
 		case GameState::InfoMenu: infoMenu(); break;
 		case GameState::CategoryMenu: categoryMenu(); break;
 		case GameState::NavigationMenu: navMenu(); break;
+		case GameState::WinningNavigationMenu: winNavMenu(); break;
     }
 
     Design::Window->draw(backgroundSprite);

@@ -24,6 +24,7 @@ public:
     void infoMenu();
     void categoryMenu();
     void navMenu();
+    void winNavMenu();
 
     int handleClick(Vector2i mousePos);
 

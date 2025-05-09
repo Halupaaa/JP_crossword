@@ -24,4 +24,13 @@ struct Design
 
     static const Color IncorrectCellColor;
     static const Color TransparentColor;
+
+    static Texture backgroundTexture;
+
+    static Font FirstFont;
+    static Font SecondFont;
+
+    static void loadTextures();
+
+    static void loadFonts();
 };

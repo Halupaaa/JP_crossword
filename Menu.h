@@ -9,8 +9,7 @@ using namespace sf;
 class Menu
 {
 private:
-    Font font;
-    Texture backgroundTexture;
+    
     Sprite backgroundSprite;
 
     Text titleText;

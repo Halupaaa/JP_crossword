@@ -11,7 +11,7 @@ Grid::Grid() : field_width(0), cell_size(0), width(0), height(0), center_x(0), c
 
 Grid::Grid(int field_width, vector<vector<int>> hints[])
 {
-    font.loadFromFile("fonts/Groovy_Vibes2.otf");
+	Design::loadFonts();
 
     this->field_width = field_width;
 
@@ -188,7 +188,7 @@ void Grid::draw()
     RectangleShape cell(Vector2f(cell_size, cell_size));
 
     Text text_hint;
-    text_hint.setFont(font);
+    text_hint.setFont(Design::SecondFont);
     text_hint.setCharacterSize(cell_size * 0.8);
     text_hint.setFillColor(Design::HintTextColor);
 
@@ -281,7 +281,7 @@ void Grid::draw()
     }
 
     Text enterText;
-    enterText.setFont(font);
+    enterText.setFont(Design::SecondFont);
     enterText.setString("Press ENTER \nto navigate");
     enterText.setCharacterSize(22);
     enterText.setFillColor(Design::TransparentColor);

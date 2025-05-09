@@ -68,3 +68,20 @@ const Color Design::CrossColor = Color(255, 130, 100);
 const Color Design::IncorrectCellColor = Color(92, 31, 31);
 
 */
+
+Font Design::FirstFont;
+Font Design::SecondFont;
+
+Texture Design::backgroundTexture;
+
+void Design::loadFonts()
+{
+	Design::FirstFont.loadFromFile("fonts/Masa_Groovy.ttf");
+	Design::SecondFont.loadFromFile("fonts/Groovy_Vibes2.otf");
+}
+
+void Design::loadTextures()
+{
+	backgroundTexture.loadFromFile("pics/waves1.jpeg");
+	backgroundTexture.setSmooth(true);
+}

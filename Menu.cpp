@@ -4,10 +4,9 @@
 
 Menu::Menu()
 {
-    backgroundTexture.loadFromFile("pics/waves1.jpeg");
-    backgroundTexture.setSmooth(true);
+	Design::loadTextures();
 
-    font.loadFromFile("fonts/Masa_Groovy.ttf");
+	Design::loadFonts();
 }
 
 void Menu::startMenu()
@@ -16,7 +15,7 @@ void Menu::startMenu()
 
     titleText.setString("");
 
-    mainText.setFont(font);
+    mainText.setFont(Design::FirstFont);
     mainText.setString("jp crosswords");
     mainText.setCharacterSize(140);
     mainText.setFillColor(Design::MenuTextColor);
@@ -26,28 +25,28 @@ void Menu::startMenu()
     mainText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
     mainText.setPosition(Design::Window->getSize().x / 2.f, 200);
 
-    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.setTexture(Design::backgroundTexture);
     backgroundSprite.setScale(
-        Design::Window->getSize().x / (float)backgroundTexture.getSize().x,
-        Design::Window->getSize().y / (float)backgroundTexture.getSize().y
+        Design::Window->getSize().x / (float)Design::backgroundTexture.getSize().x,
+        Design::Window->getSize().y / (float)Design::backgroundTexture.getSize().y
     );
 
     Vector2f buttonSize(400.f, 80.f);
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
-    Font& f = font;
+    Font& f = Design::FirstFont;
 
-    firstBtn = Button( "play", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
-    secondBtn = Button( "about", Design::Window->getSize().y / 2.f, font, buttonSize);
-    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
+    firstBtn = Button( "play", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
+    secondBtn = Button( "about", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
+    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
 }
 
 void Menu::infoMenu()
 {
     backgroundSprite.setColor(Design::MenuButtonColor);
 
-	titleText.setFont(font);
+	titleText.setFont(Design::FirstFont);
 	titleText.setString("How to Play Japanese Crosswords?");
 	titleText.setCharacterSize(70);
 	titleText.setFillColor(Design::MenuTextColor);
@@ -56,7 +55,7 @@ void Menu::infoMenu()
     titleText.setPosition(Design::Window->getSize().x / 2.f, 200);
     Design::Window->draw(titleText);
 
-    mainText.setFont(font);
+    mainText.setFont(Design::FirstFont);
     mainText.setString("\nYour goal is to reveal a hidden picture by filling in \nthe correct squares - using logic, not luck.Numbers\n on the top and left show how many filled blocks\n are in each column or row.\nMultiple numbers mean separate groups, with at \nleast one empty square between them.Left click to \nfill a square.Right click to cross out a square.\nStart with rows or columns that have big or obvious \nclues.Look for overlaps - where filled blocks must go \nno matter what.\nTake your time.Stay sharp.And remember - it's not just \nabout solving it, it's about solving it right.Ready? Let's go!");
     mainText.setCharacterSize(35);
     mainText.setFillColor(Design::MenuTextColor);
@@ -66,21 +65,20 @@ void Menu::infoMenu()
     mainText.setOrigin(mainBounds.width / 2.f, mainBounds.height / 2.f);
     mainText.setPosition(Design::Window->getSize().x / 2.f, Design::Window->getSize().y / 2.f);
 
-    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.setTexture(Design::backgroundTexture);
     backgroundSprite.setScale(
-        Design::Window->getSize().x / (float)backgroundTexture.getSize().x,
-        Design::Window->getSize().y / (float)backgroundTexture.getSize().y
+        Design::Window->getSize().x / (float)Design::backgroundTexture.getSize().x,
+        Design::Window->getSize().y / (float)Design::backgroundTexture.getSize().y
     );
 
     Vector2f buttonSize(400.f, 80.f);
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
-    Font& f = font;
 
-    firstBtn = Button("back", Design::Window->getSize().y / 2.f + 300, font, buttonSize);
-	secondBtn = Button("", -500, font, buttonSize);
-	thirdBtn = Button("", -500, font, buttonSize);
+    firstBtn = Button("back", Design::Window->getSize().y / 2.f + 300, Design::FirstFont, buttonSize);
+	secondBtn = Button("", -500, Design::FirstFont, buttonSize);
+	thirdBtn = Button("", -500, Design::FirstFont, buttonSize);
 }
 
 void Menu::categoryMenu()
@@ -89,7 +87,7 @@ void Menu::categoryMenu()
 
     titleText.setString("");
 
-    mainText.setFont(font);
+    mainText.setFont(Design::FirstFont);
     mainText.setString("A random game will be picked \nfrom the category you chose");
     mainText.setCharacterSize(65);
     mainText.setFillColor(Design::MenuTextColor);
@@ -98,21 +96,20 @@ void Menu::categoryMenu()
     mainText.setOrigin((titleTextBounds.width / 2.f) - 20.f, titleTextBounds.height / 2.f);
     mainText.setPosition(Design::Window->getSize().x / 2.f, 250);
 
-    backgroundSprite.setTexture(backgroundTexture);
+    backgroundSprite.setTexture(Design::backgroundTexture);
     backgroundSprite.setScale(
-        Design::Window->getSize().x / (float)backgroundTexture.getSize().x,
-        Design::Window->getSize().y / (float)backgroundTexture.getSize().y
+        Design::Window->getSize().x / (float)Design::backgroundTexture.getSize().x,
+        Design::Window->getSize().y / (float)Design::backgroundTexture.getSize().y
     );
 
     Vector2f buttonSize(400.f, 80.f);
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
-    Font& f = font;
 
-    firstBtn = Button("5 x 5", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
-    secondBtn = Button("10 x 10", Design::Window->getSize().y / 2.f, font, buttonSize);
-    thirdBtn = Button("15 x 15", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
+    firstBtn = Button("5 x 5", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
+    secondBtn = Button("10 x 10", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
+    thirdBtn = Button("15 x 15", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
 }
 
 void Menu::navMenu()
@@ -131,17 +128,16 @@ void Menu::navMenu()
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
-    Font& f = font;
 
-    firstBtn = Button("continue", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
-    secondBtn = Button("new game", Design::Window->getSize().y / 2.f, font, buttonSize);
-    thirdBtn = Button("start menu", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
+    firstBtn = Button("continue", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
+    secondBtn = Button("new game", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
+    thirdBtn = Button("start menu", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
 }
 void Menu::winNavMenu()
 {
     titleText.setString("");
 
-    mainText.setFont(font);
+    mainText.setFont(Design::FirstFont);
     mainText.setString("cool");
     mainText.setCharacterSize(140);
     mainText.setFillColor(Design::MenuTextColor);
@@ -156,11 +152,10 @@ void Menu::winNavMenu()
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
-    Font& f = font;
 
-    firstBtn = Button("new game", Design::Window->getSize().y / 2.f - 100, font, buttonSize);
-    secondBtn = Button("start menu", Design::Window->getSize().y / 2.f, font, buttonSize);
-    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, font, buttonSize);
+    firstBtn = Button("new game", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
+    secondBtn = Button("start menu", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
+    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
 }
 
 int Menu::handleClick(Vector2i mousePos)

@@ -1,6 +1,8 @@
 #include "Design.h"
-
 #include "GameStyle.h"
+#include <iostream>
+
+using namespace std;
 
 RenderWindow* Design::Window = new RenderWindow(VideoMode({ 1400, 940 }), "JCross", Style::Close | Style::Titlebar);
 
@@ -38,19 +40,13 @@ void Design::loadFonts()
 
 void Design::loadTextures()
 {
-	BackgroundTexture[0].loadFromFile("pics/cadr0.png");
-	BackgroundTexture[1].loadFromFile("pics/cadr1.png");
-	BackgroundTexture[2].loadFromFile("pics/cadr2.png");
-	BackgroundTexture[3].loadFromFile("pics/cadr3.png");
-	BackgroundTexture[4].loadFromFile("pics/cadr4.png");
-	BackgroundTexture[5].loadFromFile("pics/cadr5.png");
-	BackgroundTexture[6].loadFromFile("pics/cadr6.png");
-	BackgroundTexture[7].loadFromFile("pics/cadr7.png");
-	BackgroundTexture[8].loadFromFile("pics/cadr8.png");
-	BackgroundTexture[9].loadFromFile("pics/cadr9.png");
-	BackgroundTexture[10].loadFromFile("pics/cadr10.png");
-
+    for (int i = 0; i < 12; i++) 
+    {
+        string filename = "pics/cadr" + std::to_string(i) + ".png";
+        BackgroundTexture[i].loadFromFile(filename);
+    }
 }
+
 
 void Design::applyStyle(GameStyle style)
 {

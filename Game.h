@@ -22,4 +22,3 @@ public:
 	void update(Grid& grid);
 	void render(Grid& grid);
 };
-

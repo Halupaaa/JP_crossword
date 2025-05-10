@@ -161,15 +161,15 @@ void Menu::winNavMenu()
     Design::Window->draw(overlay);
 
     mainText.setFont(Design::FirstFont);
-    mainText.setString("cool");
-    mainText.setCharacterSize(140);
-    mainText.setFillColor(Design::MenuTextColor);
-
-    backgroundSprite.setColor(Design::TransparentBlackColor);
+    mainText.setString("Puzzle solved!");
+    mainText.setCharacterSize(120);
+    if (Design::MenuButtonColor == Color(45, 47, 56) || 
+        Design::MenuButtonColor == Color(60, 40, 50)) mainText.setFillColor(Design::MenuTextColor);
+	else mainText.setFillColor(Design::MenuButtonColor);
 
     FloatRect titleTextBounds = mainText.getLocalBounds();
     mainText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
-    mainText.setPosition(Design::Window->getSize().x / 2.f, 200);
+    mainText.setPosition(Design::Window->getSize().x / 2.f, 250);
 
     Vector2f buttonSize(400.f, 80.f);
     Vector2f buttonPos(Design::Window->getSize().x / 2.f - buttonSize.x / 2.f, Design::Window->getSize().y / 2.f);

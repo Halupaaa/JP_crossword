@@ -21,8 +21,8 @@ Color Design::GridOutlineColor;
 Color Design::CrossColor;
 
 Color Design::IncorrectCellColor;
-Color Design::TransparentBlackColor = Color(0, 0, 0, 100);
-Color Design::TransparentGrayColor = Color(120, 120, 120, 100);
+Color Design::TransparentBlackColor = Color(0, 0, 0, 400);
+Color Design::TransparentGrayColor = Color(120, 120, 120, 200);
 
 
 Font Design::FirstFont;

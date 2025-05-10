@@ -36,7 +36,7 @@ Grid generateRandomGrid(json info_hints, int grid_size)
     return grid;
 }
 
-int main()
+int WinMain()
 {
 	srand(time(0));
 

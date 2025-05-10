@@ -9,7 +9,10 @@ using namespace sf;
 class Menu
 {
 private:
-    
+    int currentFrame = 0;
+    sf::Clock animationClock;
+    float frameDelay = 0.1f;
+
     Sprite backgroundSprite;
 
     Text titleText;
@@ -19,6 +22,7 @@ private:
 public:
     Menu();
 
+    void updateAnimation();
     void startMenu();
     void infoMenu();
     void categoryMenu();

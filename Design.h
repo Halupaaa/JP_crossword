@@ -11,6 +11,7 @@ struct Design
     static const Color MenuTextColor;
 	static const Color MenuButtonColor;
 
+    static const Color StartBackgroundColor;
     static const Color BackgroundColor;
 
     static const Color HintTextColor;
@@ -25,7 +26,7 @@ struct Design
     static const Color IncorrectCellColor;
     static const Color TransparentColor;
 
-    static Texture backgroundTexture;
+    static Texture BackgroundTexture[11];
 
     static Font FirstFont;
     static Font SecondFont;

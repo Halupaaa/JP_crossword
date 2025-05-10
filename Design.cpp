@@ -1,6 +1,30 @@
 #include "Design.h"
 
+Font Design::FirstFont;
+Font Design::SecondFont;
+
+Texture Design::BackgroundTexture[];
+
 RenderWindow* Design::Window = new RenderWindow(VideoMode({ 1400, 940 }), "JCross", Style::Close | Style::Titlebar);
+
+const Color Design::TransparentColor = Color(0, 0, 0, 100);
+
+void Design::loadTextures()
+{
+	BackgroundTexture[0].loadFromFile("pics/cadr0.png");
+	BackgroundTexture[1].loadFromFile("pics/cadr1.png");
+	BackgroundTexture[2].loadFromFile("pics/cadr2.png");
+	BackgroundTexture[3].loadFromFile("pics/cadr3.png");
+	BackgroundTexture[4].loadFromFile("pics/cadr4.png");
+	BackgroundTexture[5].loadFromFile("pics/cadr5.png");
+	BackgroundTexture[6].loadFromFile("pics/cadr6.png");
+	BackgroundTexture[7].loadFromFile("pics/cadr7.png");
+	BackgroundTexture[8].loadFromFile("pics/cadr8.png");
+	BackgroundTexture[9].loadFromFile("pics/cadr9.png");
+	BackgroundTexture[10].loadFromFile("pics/cadr10.png");
+
+}
+
 
 /*dark pricolne
 const Color Design::BackgroundColor = Color(24, 26, 32);
@@ -16,9 +40,13 @@ const Color Design::CrossColor = Color(225, 195, 120);
 
 const Color Design::IncorrectCellColor = Color(140, 120, 76);
 */
-/*sacura milashka
+/*LightPink*/
 
- const Color Design::BackgroundColor = Color(250, 245, 242);
+const Color Design::MenuTextColor = Color(90, 70, 85);
+const Color Design::MenuButtonColor = Color(245, 230, 230);
+
+const Color Design::StartBackgroundColor = Color(250, 227, 227);
+const Color Design::BackgroundColor = Color(232, 216, 216);
 
 const Color Design::HintTextColor = Color(90, 70, 85);
 const Color Design::HintCellColor = Color(245, 230, 230);
@@ -27,17 +55,22 @@ const Color Design::HintCellOutlineColor = Color(210, 170, 180);
 const Color Design::GameCellColor = Color(255, 240, 235);
 const Color Design::FilledCellColor = Color(90, 40, 60);
 const Color Design::GridOutlineColor = Color(140, 100, 110);
-const Color Design::CrossColor = Color(200, 120, 140);
+const Color Design::CrossColor = Color(90, 40, 60);
 
 const Color Design::IncorrectCellColor = Color(189, 175, 175);
-*/
 
-/* pricolna sacura*/
-const Color Design::MenuTextColor = Color(200, 100, 120);
-const Color Design::MenuButtonColor = Color(255, 230, 235);
+void Design::loadFonts()
+{
+	Design::FirstFont.loadFromFile("fonts/Metch_Bright.ttf");
+	Design::SecondFont.loadFromFile("fonts/CooperBlackStd.ttf");
+}
 
-const Color Design::TransparentColor = Color(0, 0, 0,100);
 
+/* pricolna sacura
+const Color Design::MenuTextColor = Color(100, 40, 30);
+const Color Design::MenuButtonColor = Color(240, 210, 200);
+
+const Color Design::StartBackgroundColor = Color(232, 216, 216);
 const Color Design::BackgroundColor = Color(245, 235, 220);
 
 const Color Design::HintTextColor = Color(100, 40, 30);
@@ -51,6 +84,12 @@ const Color Design::CrossColor = Color(120, 30, 30);
 
 const Color Design::IncorrectCellColor = Color(209, 182, 176);
 
+void Design::loadFonts()
+{
+	Design::FirstFont.loadFromFile("fonts/Metch_Bright.ttf");
+	Design::SecondFont.loadFromFile("fonts/CooperBlackStd.ttf");
+}
+*/
 
 /*  Like a game nintendo pricolnaya
 
@@ -67,21 +106,13 @@ const Color Design::CrossColor = Color(255, 130, 100);
 
 const Color Design::IncorrectCellColor = Color(92, 31, 31);
 
-*/
-
-Font Design::FirstFont;
-Font Design::SecondFont;
-
-Texture Design::backgroundTexture;
-
 void Design::loadFonts()
 {
-	Design::FirstFont.loadFromFile("fonts/Masa_Groovy.ttf");
-	Design::SecondFont.loadFromFile("fonts/Groovy_Vibes2.otf");
+	Design::FirstFont.loadFromFile("fonts/Fat_Kat.ttf");
+	Design::SecondFont.loadFromFile("fonts/Fat_Kat.ttf");
 }
 
-void Design::loadTextures()
-{
-	backgroundTexture.loadFromFile("pics/waves1.jpeg");
-	backgroundTexture.setSmooth(true);
-}
+*/
+
+
+

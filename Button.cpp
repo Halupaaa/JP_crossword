@@ -1,14 +1,24 @@
 #include "Button.h"
+
+#include <any>
+
 #include "Design.h"
+#include "GameState.h"
 
 Button::Button()
 {
-    box.setOutlineThickness(3);
+    box.setOutlineThickness(1);
+	Design::loadFonts();
 }
 
-Button::Button( const string& text, float yPos, Font& f, Vector2f buttonSize)
+Button::Button( const string& text, float yPos, Vector2f buttonSize)
 {
-    label.setFont(f);
+    if (std::any_of(text.begin(), text.end(), ::isdigit)) 
+    {
+        label.setFont(Design::SecondFont);
+    }
+    else label.setFont(Design::FirstFont);
+
     label.setString(text);
     label.setCharacterSize(buttonSize.y * 2.f / 3.f);
 
@@ -25,7 +35,7 @@ Button::Button( const string& text, float yPos, Font& f, Vector2f buttonSize)
     box.setFillColor(Design::MenuButtonColor);
     box.setOutlineColor(Design::MenuTextColor);
     label.setFillColor(Design::MenuTextColor);
-    box.setOutlineThickness(3);
+    box.setOutlineThickness(2);
 };
 
 bool Button::isClicked(Vector2i mousePos)

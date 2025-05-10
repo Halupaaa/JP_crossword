@@ -5,13 +5,30 @@
 Menu::Menu()
 {
 	Design::loadTextures();
-
 	Design::loadFonts();
 }
 
+void Menu::updateAnimation()
+{
+    backgroundSprite.setScale(
+        Design::Window->getSize().x / (float)Design::BackgroundTexture[0].getSize().x + 0.3,
+		Design::Window->getSize().y / (float)Design::BackgroundTexture[0].getSize().y
+    );
+
+    if (animationClock.getElapsedTime().asSeconds() >= frameDelay)
+    {
+        currentFrame = (currentFrame + 1) % 11;
+        backgroundSprite.setTexture(Design::BackgroundTexture[currentFrame]);
+        animationClock.restart();
+    }
+
+    Design::Window->draw(backgroundSprite);
+}
+
+
 void Menu::startMenu()
 {
-    backgroundSprite.setColor(Design::MenuButtonColor);
+    backgroundSprite.setColor(Design::StartBackgroundColor);
 
     titleText.setString("");
 
@@ -25,34 +42,28 @@ void Menu::startMenu()
     mainText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
     mainText.setPosition(Design::Window->getSize().x / 2.f, 200);
 
-    backgroundSprite.setTexture(Design::backgroundTexture);
-    backgroundSprite.setScale(
-        Design::Window->getSize().x / (float)Design::backgroundTexture.getSize().x,
-        Design::Window->getSize().y / (float)Design::backgroundTexture.getSize().y
-    );
-
     Vector2f buttonSize(400.f, 80.f);
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
     Font& f = Design::FirstFont;
 
-    firstBtn = Button( "play", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
-    secondBtn = Button( "about", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
-    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
+    firstBtn = Button( "play", Design::Window->getSize().y / 2.f - 100, buttonSize);
+    secondBtn = Button( "about", Design::Window->getSize().y / 2.f, buttonSize);
+    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, buttonSize);
 }
 
 void Menu::infoMenu()
 {
-    backgroundSprite.setColor(Design::MenuButtonColor);
+    backgroundSprite.setColor(Design::BackgroundColor);
 
 	titleText.setFont(Design::FirstFont);
 	titleText.setString("How to Play Japanese Crosswords?");
-	titleText.setCharacterSize(70);
+	titleText.setCharacterSize(65);
 	titleText.setFillColor(Design::MenuTextColor);
 	FloatRect titleTextBounds = titleText.getLocalBounds();
 	titleText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
-    titleText.setPosition(Design::Window->getSize().x / 2.f, 200);
+    titleText.setPosition(Design::Window->getSize().x / 2.f, 130);
     Design::Window->draw(titleText);
 
     mainText.setFont(Design::FirstFont);
@@ -63,27 +74,23 @@ void Menu::infoMenu()
 
     FloatRect mainBounds = mainText.getLocalBounds();
     mainText.setOrigin(mainBounds.width / 2.f, mainBounds.height / 2.f);
-    mainText.setPosition(Design::Window->getSize().x / 2.f, Design::Window->getSize().y / 2.f);
+    mainText.setPosition(Design::Window->getSize().x / 2.f, Design::Window->getSize().y / 2.f - 50);
 
-    backgroundSprite.setTexture(Design::backgroundTexture);
-    backgroundSprite.setScale(
-        Design::Window->getSize().x / (float)Design::backgroundTexture.getSize().x,
-        Design::Window->getSize().y / (float)Design::backgroundTexture.getSize().y
-    );
+    //backgroundSprite.setTexture(Design::backgroundTexture);
 
     Vector2f buttonSize(400.f, 80.f);
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
 
-    firstBtn = Button("back", Design::Window->getSize().y / 2.f + 300, Design::FirstFont, buttonSize);
-	secondBtn = Button("", -500, Design::FirstFont, buttonSize);
-	thirdBtn = Button("", -500, Design::FirstFont, buttonSize);
+    firstBtn = Button("back", Design::Window->getSize().y / 2.f + 300, buttonSize);
+	secondBtn = Button("", -500, buttonSize);
+	thirdBtn = Button("", -500, buttonSize);
 }
 
 void Menu::categoryMenu()
 {
-    backgroundSprite.setColor(Design::MenuButtonColor);
+    backgroundSprite.setColor(Design::BackgroundColor);
 
     titleText.setString("");
 
@@ -96,20 +103,14 @@ void Menu::categoryMenu()
     mainText.setOrigin((titleTextBounds.width / 2.f) - 20.f, titleTextBounds.height / 2.f);
     mainText.setPosition(Design::Window->getSize().x / 2.f, 250);
 
-    backgroundSprite.setTexture(Design::backgroundTexture);
-    backgroundSprite.setScale(
-        Design::Window->getSize().x / (float)Design::backgroundTexture.getSize().x,
-        Design::Window->getSize().y / (float)Design::backgroundTexture.getSize().y
-    );
-
     Vector2f buttonSize(400.f, 80.f);
     Color boxColor(Design::MenuButtonColor);
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
 
-    firstBtn = Button("5 x 5", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
-    secondBtn = Button("10 x 10", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
-    thirdBtn = Button("15 x 15", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
+    firstBtn = Button("5 x 5", Design::Window->getSize().y / 2.f - 100, buttonSize);
+    secondBtn = Button("10 x 10", Design::Window->getSize().y / 2.f, buttonSize);
+    thirdBtn = Button("15 x 15", Design::Window->getSize().y / 2.f + 100, buttonSize);
 }
 
 void Menu::navMenu()
@@ -118,7 +119,10 @@ void Menu::navMenu()
 
     mainText.setString("");
 
-    backgroundSprite.setColor(Design::TransparentColor);
+    RectangleShape overlay;
+    overlay.setSize(Vector2f(Design::Window->getSize()));
+    overlay.setFillColor(Design::TransparentColor);
+    Design::Window->draw(overlay);
 
     FloatRect titleTextBounds = mainText.getLocalBounds();
     mainText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
@@ -129,13 +133,18 @@ void Menu::navMenu()
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
 
-    firstBtn = Button("continue", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
-    secondBtn = Button("new game", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
-    thirdBtn = Button("start menu", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
+    firstBtn = Button("continue", Design::Window->getSize().y / 2.f - 100, buttonSize);
+    secondBtn = Button("new game", Design::Window->getSize().y / 2.f, buttonSize);
+    thirdBtn = Button("start menu", Design::Window->getSize().y / 2.f + 100, buttonSize);
 }
 void Menu::winNavMenu()
 {
     titleText.setString("");
+
+    RectangleShape overlay;
+    overlay.setSize(Vector2f(Design::Window->getSize()));
+    overlay.setFillColor(Design::TransparentColor);
+    Design::Window->draw(overlay);
 
     mainText.setFont(Design::FirstFont);
     mainText.setString("cool");
@@ -153,9 +162,9 @@ void Menu::winNavMenu()
     Color outlineColor(Design::MenuTextColor);
     Color textColor(Design::MenuTextColor);
 
-    firstBtn = Button("new game", Design::Window->getSize().y / 2.f - 100, Design::FirstFont, buttonSize);
-    secondBtn = Button("start menu", Design::Window->getSize().y / 2.f, Design::FirstFont, buttonSize);
-    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, Design::FirstFont, buttonSize);
+    firstBtn = Button("new game", Design::Window->getSize().y / 2.f - 100, buttonSize);
+    secondBtn = Button("start menu", Design::Window->getSize().y / 2.f, buttonSize);
+    thirdBtn = Button("exit", Design::Window->getSize().y / 2.f + 100, buttonSize);
 }
 
 int Menu::handleClick(Vector2i mousePos)
@@ -170,14 +179,18 @@ void Menu::draw(GameState state)
 {
     switch (state)
     {
-	    case GameState::StartMenu: startMenu(); break;
+	    case GameState::StartMenu:
+		    {
+				updateAnimation();
+			    startMenu();
+	    		break;
+		    }
 		case GameState::InfoMenu: infoMenu(); break;
 		case GameState::CategoryMenu: categoryMenu(); break;
 		case GameState::NavigationMenu: navMenu(); break;
 		case GameState::WinningNavigationMenu: winNavMenu(); break;
     }
-
-    Design::Window->draw(backgroundSprite);
+    
     Design::Window->draw(titleText);
 	Design::Window->draw(mainText);
     firstBtn.draw();

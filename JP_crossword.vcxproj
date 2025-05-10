@@ -108,7 +108,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Lib\SFML-2.6.2\include;C:\Users\Lenovo\Desktop\kursach\JP_crossword\dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\SFML-2.6.2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -126,7 +126,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Lib\SFML-2.6.2\include;C:\Users\Lenovo\Desktop\kursach\JP_crossword\dependencies\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -139,6 +139,7 @@
     <ClCompile Include="Design.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GameStyle.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="JP_crossword.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Design.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameStyle.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>

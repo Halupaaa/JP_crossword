@@ -281,10 +281,10 @@ void Grid::draw()
     }
 
     Text enterText;
-    enterText.setFont(Design::SecondFont);
+    enterText.setFont(Design::FirstFont);
     enterText.setString("Press ENTER \nto navigate");
     enterText.setCharacterSize(22);
-    enterText.setFillColor(Design::TransparentColor);
+    enterText.setFillColor( Design::TransparentGrayColor);
     FloatRect titleTextBounds = enterText.getLocalBounds();
     enterText.setOrigin(titleTextBounds.width / 2.f, titleTextBounds.height / 2.f);
     enterText.setPosition(Design::Window->getSize().x - 80, 30);

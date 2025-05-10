@@ -2,29 +2,33 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "GameStyle.h"
+
 using namespace sf;
 
 struct Design
 {
     static RenderWindow* Window;
 
-    static const Color MenuTextColor;
-	static const Color MenuButtonColor;
+    static Color MenuTextColor;
+	static Color MenuButtonColor;
+    static Color GameStyleBtnColor;
 
-    static const Color StartBackgroundColor;
-    static const Color BackgroundColor;
+    static Color StartBackgroundColor;
+    static Color BackgroundColor;
 
-    static const Color HintTextColor;
-    static const Color HintCellColor;
-	static const Color HintCellOutlineColor;
+    static Color HintTextColor;
+    static Color HintCellColor;
+	static Color HintCellOutlineColor;
 
-    static const Color GameCellColor;
-    static const Color FilledCellColor;
-    static const Color GridOutlineColor;
-    static const Color CrossColor;
+    static Color GameCellColor;
+    static Color FilledCellColor;
+    static Color GridOutlineColor;
+    static Color CrossColor;
 
-    static const Color IncorrectCellColor;
-    static const Color TransparentColor;
+    static Color IncorrectCellColor;
+    static Color TransparentBlackColor;
+    static Color TransparentGrayColor;
 
     static Texture BackgroundTexture[11];
 
@@ -32,6 +36,7 @@ struct Design
     static Font SecondFont;
 
     static void loadTextures();
-
     static void loadFonts();
+
+    static void applyStyle(GameStyle style);
 };

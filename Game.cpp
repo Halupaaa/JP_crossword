@@ -2,8 +2,10 @@
 
 Game::Game()
 {
-	this->menu = Menu();
-	this->state = GameState::StartMenu;
+	menu = Menu();
+	state = GameState::StartMenu;
+	style = GameStyle::LightPink;
+    Design::applyStyle(style);
     grid_size = 5;
 }
 
@@ -36,10 +38,13 @@ void Game::pollEvents(Grid& grid)
             if (state == GameState::StartMenu)
             {
                 result = menu.handleClick(mousePos);
-                if (result == 1)
+                if (result == 0)
                 {
-	                state = GameState::CategoryMenu;
+	                style = static_cast<GameStyle>(((int)style + 1) % 4);
+                    Design::applyStyle(style);
+
                 }
+            	else if (result == 1) state = GameState::CategoryMenu;
                 else if (result == 2) state = GameState::InfoMenu;
                 else if (result == 3) Design::Window->close();
             }

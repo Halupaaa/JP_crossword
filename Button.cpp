@@ -1,19 +1,16 @@
 #include "Button.h"
-
-#include <any>
-
 #include "Design.h"
 #include "GameState.h"
+#include <any>
 
 Button::Button()
 {
-    box.setOutlineThickness(1);
 	Design::loadFonts();
 }
 
-Button::Button( const string& text, float yPos, Vector2f buttonSize)
+Button::Button( const string& text, Vector2f buttonPos, Vector2f buttonSize)
 {
-    if (std::any_of(text.begin(), text.end(), ::isdigit)) 
+    if (any_of(text.begin(), text.end(), ::isdigit)) 
     {
         label.setFont(Design::SecondFont);
     }
@@ -27,22 +24,19 @@ Button::Button( const string& text, float yPos, Vector2f buttonSize)
 
     box.setSize(buttonSize);
 
-	Vector2f position (Design::Window->getSize().x / 2.f - buttonSize.x / 2.f, yPos);
+    box.setPosition(buttonPos.x, buttonPos.y);
+    label.setPosition(buttonPos.x + box.getSize().x / 2.f, buttonPos.y + box.getSize().y / 2.f);
 
-    box.setPosition(position);
-    label.setPosition(position.x + box.getSize().x / 2.f, position.y + box.getSize().y / 2.f);
-
-    box.setFillColor(Design::MenuButtonColor);
-    box.setOutlineColor(Design::MenuTextColor);
+    box.setFillColor( buttonSize.x == 50.f ? Design::GameStyleBtnColor : Design::MenuButtonColor);
+    box.setOutlineColor(Design::HintCellOutlineColor);
     label.setFillColor(Design::MenuTextColor);
-    box.setOutlineThickness(2);
+    box.setOutlineThickness(3);
 };
 
 bool Button::isClicked(Vector2i mousePos)
 {
     return box.getGlobalBounds().contains((Vector2f)mousePos);
 }
-
 
 void Button::draw()
 {

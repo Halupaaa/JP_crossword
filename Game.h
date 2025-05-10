@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "GameStyle.h"
 #include "Grid.h"
 #include "Menu.h"
 
@@ -10,6 +11,7 @@ public:
 
 	Menu menu;
 	GameState state;
+	GameStyle style;
 	int grid_size;
 
 	Game();

@@ -17,12 +17,13 @@ private:
 
     Text titleText;
     Text mainText;
-    Button firstBtn, secondBtn, thirdBtn;
+    Button firstBtn, secondBtn, thirdBtn, gameStyleBtn;
 
 public:
     Menu();
 
     void updateAnimation();
+    void GameStyleButton();
     void startMenu();
     void infoMenu();
     void categoryMenu();

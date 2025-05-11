@@ -14,16 +14,18 @@ struct GridHints
     vector<vector<int>> left_hints;
 };
 
-Grid generateRandomGrid(json info_hints, int grid_size)
+Grid generateRandomGrid(json info_hints, int grid_size, int& selected_index, int selected_grids[])
 {
-    int selected_index;
-    switch (grid_size)
+    do
     {
-		case 5: selected_index = rand() % 5; break;
-		case 10: selected_index = rand() % 5 + 5; break;
-		case 15: selected_index = rand() % 5 + 10; break;
-		default: selected_index = 0; break;
-    }
+	    switch (grid_size)
+	    {
+			case 5: selected_index = rand() % 5; break;
+			case 10: selected_index = rand() % 5 + 5; break;
+			case 15: selected_index = rand() % 5 + 10; break;
+			default: selected_index = 0; break;
+	    }
+    } while (selected_grids[selected_index] == 1);
 
     json selected_grid = info_hints["grids"][selected_index];
 
@@ -41,7 +43,8 @@ int WinMain()
 	srand(time(0));
 
     ifstream file("crossword_hints.json");
-    if (!file.is_open()) {
+    if (!file.is_open()) 
+    {
         cerr << "File is not open!" << endl;
         return 1;
     }
@@ -58,7 +61,9 @@ int WinMain()
     {
         if (game.state == GameState::NeedToGenerateGrid) 
         {
-            temp_grid = generateRandomGrid(info_hints, game.grid_size);
+            int selected_index;
+            temp_grid = generateRandomGrid(info_hints, game.grid_size, selected_index, game.selected_grids);
+			game.selected_grids[selected_index] = 1;
             game.state = GameState::Game;
         }
 

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <algorithm>
 
 Game::Game()
 {
@@ -13,8 +14,6 @@ const bool Game::running() const
 {
     return Design::Window->isOpen();
 }
-
-//
 
 void Game::pollEvents(Grid& grid)
 {
@@ -95,16 +94,29 @@ void Game::pollEvents(Grid& grid)
     }
 }
 
+void Game::updateSelectedGrid()
+{
+    for (int i = 0; i <= 10; i += 5)
+    {
+        if (all_of(selected_grids + i, selected_grids + i + 5,[](int val) { return val == 1; }))
+        	fill(selected_grids + i, selected_grids + i + 5, 0);
+    }
+}
+
 void Game::update(Grid& grid)
 {
     pollEvents (grid);
     grid.compareResultWithHints();
+
+	//if all grids of catagory have been selected, reset them
+    updateSelectedGrid();
+
     if (state == GameState::Game && grid.isSolved()) 
     {
+		//solved_grids[selected_index] = 1;
         state = GameState::WinningNavigationMenu;
         menu.navMenu();
     }
-
 }
 
 void Game::render(Grid& grid)

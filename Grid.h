@@ -35,7 +35,6 @@ public:
     Grid(int width, vector<vector<int>> hints[]);
 
     //
-    bool isEmpty();
     bool isSolved();
 	bool isRowOrColumnSolved(int grid_x, int grid_y);
     void compareResultWithHints();

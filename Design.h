@@ -18,6 +18,7 @@ struct Design
     static Color BackgroundColor;
 
     static Color HintTextColor;
+    static Color HintSolvedTextColor;
     static Color HintCellColor;
 	static Color HintCellOutlineColor;
 

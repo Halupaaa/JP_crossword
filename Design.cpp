@@ -14,6 +14,7 @@ Color Design::StartBackgroundColor;
 Color Design::BackgroundColor;
 
 Color Design::HintTextColor;
+Color Design::HintSolvedTextColor;
 Color Design::HintCellColor;
 Color Design::HintCellOutlineColor;
 
@@ -62,6 +63,7 @@ void Design::applyStyle(GameStyle style)
     		Design::BackgroundColor = Color(232, 216, 216);
 
     		Design::HintTextColor = Color(90, 70, 85);
+    		Design::HintSolvedTextColor = Color(66, 29, 44);
     		Design::HintCellColor = Color(245, 230, 230);
     		Design::HintCellOutlineColor = Color(210, 170, 180);
 
@@ -83,6 +85,7 @@ void Design::applyStyle(GameStyle style)
     		Design::BackgroundColor = Color(245, 235, 220);
 
     		Design::HintTextColor = Color(100, 40, 30);
+            Design::HintSolvedTextColor = Color(64, 17, 17);
     		Design::HintCellColor = Color(240, 210, 200);
     		Design::HintCellOutlineColor = Color(160, 90, 70);
 
@@ -104,6 +107,7 @@ void Design::applyStyle(GameStyle style)
     		Design::BackgroundColor = Color(24, 26, 32);
 
     		Design::HintTextColor = Color(200, 200, 200);
+            Design::HintSolvedTextColor = Color(225, 195, 120);
     		Design::HintCellColor = Color(45, 47, 56);
     		Design::HintCellOutlineColor = Color(80, 85, 100);
 
@@ -125,6 +129,7 @@ void Design::applyStyle(GameStyle style)
     		Design::BackgroundColor = Color(20, 18, 26);
 
     		Design::HintTextColor = Color(255, 210, 140);
+            Design::HintSolvedTextColor = Color(255, 90, 90);
     		Design::HintCellColor = Color(60, 40, 50);
     		Design::HintCellOutlineColor = Color(120, 80, 90);
 

@@ -1,10 +1,12 @@
-#include "Grid.h"
+п»ї#include "Grid.h"
 #include "Design.h"
 #include <algorithm>
 
 
-Grid::Grid() : field_width(0), cell_size(0), width(0), height(0), center_x(0), center_y(0)
+Grid::Grid() : field_width(0), cell_size(0)
 {
+	Vector2i size(0, 0);
+    Vector2f center_pos(0,0);
     max_sizes[0] = 0;
     max_sizes[1] = 0;
 }
@@ -20,20 +22,19 @@ Grid::Grid(int field_width, vector<vector<int>> hints[])
 
 	cell_states = vector<vector<int>>(field_width, vector<int>(field_width, 0));
 
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 2; ++i) 
+    {
         max_sizes[i] = max_element(hints[i].begin(), hints[i].end(),
-            [](const vector<int>& a, const vector<int>& b) {
-                return a.size() < b.size();
-            })->size();
+            [](const vector<int>& a, const vector<int>& b) { return a.size() < b.size(); })->size();
     }
 
-    height = field_width + max_sizes[0];
-    width = field_width + max_sizes[1];
+	size.y = field_width + max_sizes[0]; //height
+    size.x = field_width + max_sizes[1]; //width
 
-    cell_size = Design::Window->getSize().x / (height * 1.7);
+    cell_size = Design::Window->getSize().x / (size.y * 1.7);
 
-	center_x = (Design::Window->getSize().x - width * cell_size) / 2.f;
-	center_y = (Design::Window->getSize().y - height * cell_size) / 2.f;
+    center_pos.x = (Design::Window->getSize().x - size.x * cell_size) / 2.f;
+    center_pos.y = (Design::Window->getSize().y - size.y * cell_size) / 2.f;
 
     cur_result[0] = vector<vector<int>>(field_width);
     cur_result[1] = vector<vector<int>>(field_width);
@@ -41,6 +42,9 @@ Grid::Grid(int field_width, vector<vector<int>> hints[])
 	incorrect[0] = vector<bool>(field_width, false); //column
 	incorrect[1] = vector<bool>(field_width, false); //row
 
+    solved[0] = vector<bool>(field_width, false); //column
+	solved[1] = vector<bool>(field_width, false); //row
+    
 }
 
 bool Grid::isSolved()
@@ -69,49 +73,67 @@ bool Grid::isSolved()
 
 void Grid::isRowOrColumnSolved(int x, int y)
 {
-    vector<int> col = cur_result[0][x];
-    vector<int> hint_col = hints[0][x];
-    reverse(col.begin(), col.end());
-
-    if (col == hint_col)
     {
-        for (int i = 0; i < field_width; ++i)
+        vector<int> col = cur_result[0][x];
+        vector<int> hint_col = hints[0][x];
+        reverse(col.begin(), col.end());
+        bool matched = (col == hint_col);
+        solved[0][x] = matched;
+
+        if (matched)
         {
-            if (cell_states[i][x] == 0)
-                cell_states[i][x] = 2;
+            for (int i = 0; i < field_width; i++)
+            {
+                if (cell_states[i][x] == 0) cell_states[i][x] = 2;
+            }
         }
     }
 
-    vector<int> row = cur_result[1][y];
-    vector<int> hint_row = hints[1][y];
-    reverse(row.begin(), row.end());
-
-    if (row == hint_row)
     {
-        for (int j = 0; j < field_width; ++j)
+        vector<int> row = cur_result[1][y];
+        vector<int> hint_row = hints[1][y];
+        reverse(row.begin(), row.end());
+        bool matched = (row == hint_row);
+        solved[1][y] = matched;
+
+        if (matched)
         {
-            if (cell_states[y][j] == 0)
-                cell_states[y][j] = 2;
+            for (int j = 0; j < field_width; j++)
+            {
+                if (cell_states[y][j] == 0) cell_states[y][j] = 2;
+            }
         }
     }
+}
+
+
+
+// Check if the maximum value in the result exceeds the hint
+bool Grid::maxExceedsHint (const vector<int>& result, const vector<int>& hint)
+{
+    if (result.empty()) return false;
+    int max_result = *max_element(result.begin(), result.end());
+    int max_hint = hint.empty() ? 0 : *max_element(hint.begin(), hint.end());
+    return max_result > max_hint;
 }
 
 void Grid::compareResultWithHints()
 {
-    for (int i = 0; i < field_width; i++)
+    for (int i = 0; i < field_width; ++i)
     {
-        incorrect[0][i] = (cur_result[0][i] > hints[0][i]);
-        incorrect[1][i] = (cur_result[1][i] > hints[1][i]);
+        incorrect[0][i] = maxExceedsHint(cur_result[0][i], hints[0][i]); // СЃС‚РѕРІРїС‡РёРє
+        incorrect[1][i] = maxExceedsHint(cur_result[1][i], hints[1][i]); // СЂСЏРґРѕРє
     }
 }
+
  
 void Grid::resultUpdate(int grid_x, int grid_y)
 {
     int count = 0;
 
-    // Оновлення стовпця
+	// Update column
     cur_result[0][grid_x].clear();
-    for (int i = 0; i < field_width; ++i)
+    for (int i = 0; i < field_width; i++)
     {
         if (cell_states[i][grid_x] == 1)
             count++;
@@ -124,10 +146,10 @@ void Grid::resultUpdate(int grid_x, int grid_y)
     if (count > 0)
         cur_result[0][grid_x].push_back(count);
 
-    // Оновлення рядка
+	// Update row
     cur_result[1][grid_y].clear();
     count = 0;
-    for (int j = 0; j < field_width; ++j)
+    for (int j = 0; j < field_width; j++)
     {
         if (cell_states[grid_y][j] == 1)
             count++;
@@ -145,10 +167,10 @@ void Grid::resultUpdate(int grid_x, int grid_y)
 
 void Grid::handleClick(Vector2i mousePos, bool filled)
 {
-    int col = (mousePos.x - center_x) / cell_size;
-    int row = (mousePos.y - center_y) / cell_size;
+    int col = (mousePos.x - center_pos.x) / cell_size;
+    int row = (mousePos.y - center_pos.y) / cell_size;
 
-    if (row >= max_sizes[0] && row < height && col >= max_sizes[1] && col < width)
+    if (row >= max_sizes[0] && row < size.y && col >= max_sizes[1] && col < size.x)
     {
         int grid_x = col - max_sizes[1];
         int grid_y = row - max_sizes[0];
@@ -172,11 +194,11 @@ void Grid::draw()
     text_hint.setCharacterSize(cell_size * 0.8);
     text_hint.setFillColor(Design::HintTextColor);
 
-    for (int i = 0; i < width; ++i)
+    for (int i = 0; i < size.x; i++)
     {
-        for (int j = 0; j < height; ++j)
+        for (int j = 0; j < size.y; j++)
         {
-            cell.setPosition(Vector2f(center_x + i * cell_size, center_y + j * cell_size));
+            cell.setPosition(Vector2f(center_pos.x + i * cell_size, center_pos.y + j * cell_size));
 
             if (i < max_sizes[1] || j < max_sizes[0])
             {
@@ -188,30 +210,35 @@ void Grid::draw()
 
             	if (i >= max_sizes[1] && j < max_sizes[0])
             	{
-            		// Номер стовпця у верхніх підказках
+            		// РќРѕРјРµСЂ СЃС‚РѕРІРїС†СЏ Сѓ РІРµСЂС…РЅС–С… РїС–РґРєР°Р·РєР°С…
             		int game_col_idx = i - max_sizes[1];
-            		// Позиція елемента у стовпчику(знизу вгору)
+            		// РџРѕР·РёС†С–СЏ РµР»РµРјРµРЅС‚Р° Сѓ СЃС‚РѕРІРїС‡РёРєСѓ(Р·РЅРёР·Сѓ РІРіРѕСЂСѓ)
             		int hint_num_pos = (max_sizes[0] - 1) - j;
 
             		if (game_col_idx >= 0 && game_col_idx < (int)hints[0].size() && hint_num_pos >= 0 &&
                         hint_num_pos < (int)hints[0][game_col_idx].size())
             		{
             			text_hint.setString(to_string(hints[0][game_col_idx][hint_num_pos]));
+
+                        if (solved[0][game_col_idx]) text_hint.setFillColor(Design::HintSolvedTextColor);
+                        else text_hint.setFillColor(Design::HintTextColor);
             		}
             		else text_hint.setString("");
-
             	}
             	else if (i < max_sizes[1] && j >= max_sizes[0])
             	{
-            		// Номер стовпця у лівих підказках
+            		// РќРѕРјРµСЂ СЃС‚РѕРІРїС†СЏ Сѓ Р»С–РІРёС… РїС–РґРєР°Р·РєР°С…
             		int game_row_idx = j - max_sizes[0];
-            		// Позиція елемента у рядку(справа на ліво)
+            		// РџРѕР·РёС†С–СЏ РµР»РµРјРµРЅС‚Р° Сѓ СЂСЏРґРєСѓ(СЃРїСЂР°РІР° РЅР° Р»С–РІРѕ)
             		int hint_num_pos = (max_sizes[1] - 1) - i;
 
             		if (game_row_idx >= 0 && game_row_idx < (int)hints[1].size() && hint_num_pos >= 0 &&
                         hint_num_pos < (int)hints[1][game_row_idx].size())
             		{
             			text_hint.setString(to_string(hints[1][game_row_idx][hint_num_pos]));
+
+                        if (solved[1][game_row_idx]) text_hint.setFillColor(Design::HintSolvedTextColor);
+                        else text_hint.setFillColor(Design::HintTextColor);
             		}
             		else text_hint.setString("");
             	}

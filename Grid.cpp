@@ -67,56 +67,34 @@ bool Grid::isSolved()
     return true;
 }
 
-bool Grid::isRowOrColumnSolved(int x, int y)
+void Grid::isRowOrColumnSolved(int x, int y)
 {
     vector<int> col = cur_result[0][x];
-    vector<int> row = cur_result[1][y];
-
+    vector<int> hint_col = hints[0][x];
     reverse(col.begin(), col.end());
+
+    if (col == hint_col)
+    {
+        for (int i = 0; i < field_width; ++i)
+        {
+            if (cell_states[i][x] == 0)
+                cell_states[i][x] = 2;
+        }
+    }
+
+    vector<int> row = cur_result[1][y];
+    vector<int> hint_row = hints[1][y];
     reverse(row.begin(), row.end());
 
-    return col == hints[0][x] || row == hints[1][y];
-}
-
-
-/*void Grid::compareResultWithHints()
-{
-    auto compareAgainstReversedHintByMax = [](const vector<int>& result, const vector<int>& hint) -> bool {
-        vector<int> reversed_hint = hint;
-        reverse(reversed_hint.begin(), reversed_hint.end());
-
-        vector<bool> used(reversed_hint.size(), false);
-
-        for (int block : result)
-        {
-            bool matched = false;
-            int max_val = -1;
-            int max_idx = -1;
-
-            // знайти найб≥льший ще не використаний елемент у reversed_hint, €кий >= block
-            for (int i = 0; i < reversed_hint.size(); ++i)
-            {
-                if (!used[i] && reversed_hint[i] >= block && reversed_hint[i] > max_val)
-                {
-                    max_val = reversed_hint[i];
-                    max_idx = i;
-                }
-            }
-
-            if (max_idx != -1)
-				used[max_idx] = true; // позначити €к використаний
-            else
-            	return true; // немаЇ в≥дпов≥дного Ч помилка
-        }
-        return false; // усе гаразд
-    };
-
-    for (int i = 0; i < field_width; i++)
+    if (row == hint_row)
     {
-        incorrect[0][i] = compareAgainstReversedHintByMax(cur_result[0][i], hints[0][i]); // стовпц≥
-        incorrect[1][i] = compareAgainstReversedHintByMax(cur_result[1][i], hints[1][i]); // р€дки
+        for (int j = 0; j < field_width; ++j)
+        {
+            if (cell_states[y][j] == 0)
+                cell_states[y][j] = 2;
+        }
     }
-}*/
+}
 
 void Grid::compareResultWithHints()
 {
@@ -161,6 +139,8 @@ void Grid::resultUpdate(int grid_x, int grid_y)
     }
     if (count > 0)
         cur_result[1][grid_y].push_back(count);
+
+    isRowOrColumnSolved(grid_x, grid_y);
 }
 
 void Grid::handleClick(Vector2i mousePos, bool filled)
@@ -263,7 +243,7 @@ void Grid::draw()
                 cell.setOutlineThickness(2);
                 Design::Window->draw(cell);
 
-            	if (cell_states[y][x] == 2 || isRowOrColumnSolved(x, y))
+            	if (cell_states[y][x] == 2)
                 {
                     Vertex line1[] = {
                         Vertex(Vector2f(cell.getPosition().x, cell.getPosition().y), Design::CrossColor),

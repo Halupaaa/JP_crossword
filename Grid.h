@@ -36,7 +36,7 @@ public:
 
     //
     bool isSolved();
-	bool isRowOrColumnSolved(int grid_x, int grid_y);
+	void isRowOrColumnSolved(int grid_x, int grid_y);
     void compareResultWithHints();
     void resultUpdate(int grid_x, int grid_y);
 

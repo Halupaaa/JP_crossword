@@ -10,7 +10,7 @@ class Menu
 {
 private:
     int currentFrame = 0;
-    sf::Clock animationClock;
+    Clock animationClock;
     float frameDelay = 0.1f;
 
     Sprite backgroundSprite;

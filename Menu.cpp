@@ -120,7 +120,7 @@ void Menu::categoryMenu()
     firstBtn = Button("5 x 5", Vector2f(buttonPos.x, buttonPos.y - 100), buttonSize);
     secondBtn = Button("10 x 10", Vector2f(buttonPos.x, buttonPos.y), buttonSize);
     thirdBtn = Button("15 x 15", Vector2f(buttonPos.x, buttonPos.y + 100), buttonSize);
-    gameStyleBtn = Button("", Vector2f(-500, -500), buttonSize);
+    gameStyleBtn = Button("", Vector2f(-5000, -5000), buttonSize);
 
 }
 
@@ -198,12 +198,12 @@ void Menu::draw(GameState state)
     switch (state)
     {
 	    case GameState::StartMenu:
-		    {
-				updateAnimation();
-	    		GameStyleButton();
-			    startMenu();
-	    		break;
-		    }
+        {
+	    	updateAnimation();
+	    	GameStyleButton();
+			startMenu();
+	    	break;
+        }
 		case GameState::InfoMenu: infoMenu(); break;
 		case GameState::CategoryMenu: categoryMenu(); break;
 		case GameState::NavigationMenu: navMenu(); break;

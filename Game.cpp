@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <chrono>
+#include <thread>
 #include <algorithm>
 
 Game::Game()
@@ -34,61 +36,79 @@ void Game::pollEvents(Grid& grid)
         {
             Vector2i mousePos = Mouse::getPosition(*Design::Window);
             int result;
-            if (state == GameState::StartMenu)
-            {
-                result = menu.handleClick(mousePos);
-                if (result == 0)
-                {
-	                style = static_cast<GameStyle>(((int)style + 1) % 4);
-                    Design::applyStyle(style);
 
-                }
-            	else if (result == 1) state = GameState::CategoryMenu;
-                else if (result == 2) state = GameState::InfoMenu;
-                else if (result == 3) Design::Window->close();
-            }
-            else if (state == GameState::InfoMenu)
+            switch (state)
             {
-            	result = menu.handleClick(mousePos);
-                if (result == 1)
-                    state = GameState::StartMenu;
-            }
-            else if (state == GameState::CategoryMenu)
-            {
-                result = menu.handleClick(mousePos);
-                if (result == 1)
+				case GameState::StartMenu:
+	            {
+					result = menu.handleClick(mousePos);
+		            switch (result)
+		            {
+						case 0:
+                        {
+							style = static_cast<GameStyle>(((int)style + 1) % 4);
+								Design::applyStyle(style);
+								break;
+                        }
+						case 1: state = GameState::CategoryMenu; break;
+						case 2: state = GameState::InfoMenu; break;
+						case 3: Design::Window->close(); break;
+                        default: break;
+		            }
+                    break;
+	            }
+				case GameState::InfoMenu:
+				{
+                    result = menu.handleClick(mousePos);
+                    if (result == 1) state = GameState::StartMenu;
+                    break;
+				}
+				case GameState::CategoryMenu:
                 {
-                    grid_size = 5;
-                }
-                else if (result == 2) grid_size = 10;
-                else if (result == 3) grid_size = 15;
-                state = GameState::NeedToGenerateGrid;
-            }
-            else if (state == GameState::NavigationMenu)
-            {
-            	result = menu.handleClick(mousePos);
-                if (result == 1)
+                    result = menu.handleClick(mousePos);
+                    if (result != -1)
+                    {
+	                    switch (result)
+	                    {
+		                    case 1: grid_size = 5; break;
+		                    case 2: grid_size = 10; break;
+		                    case 3: grid_size = 15; break;
+		                    default: break;
+	                    }
+                    	state = GameState::NeedToGenerateGrid;
+                    }
+                    break;
+				}
+                case GameState::NavigationMenu:
                 {
-                    state = GameState::Game;
+                    result = menu.handleClick(mousePos);
+                    switch (result)
+                    {
+	                    case 1: state = GameState::Game; break;
+	                    case 2: state = GameState::CategoryMenu; break;
+	                    case 3: state = GameState::StartMenu; break;
+                        default: break;
+                    }
+                    break;
                 }
-                else if (result == 2) state = GameState::CategoryMenu;
-                else if (result == 3) state = GameState::StartMenu;
-                
-            }
-            else if (state == GameState::WinningNavigationMenu)
-            {
-                result = menu.handleClick(mousePos);
-                if (result == 1)
+                case GameState::WinningNavigationMenu:
                 {
-                    state = GameState::CategoryMenu;
+                    result = menu.handleClick(mousePos);
+                    switch (result)
+                    {
+	                    case 1: state = GameState::CategoryMenu; break;
+	                    case 2: state = GameState::StartMenu; break;
+	                    case 3: Design::Window->close(); break;
+                        default: break;
+                    }
+                    break;
                 }
-                else if (result == 2) state = GameState::StartMenu;
-                else if (result == 3) Design::Window->close();
-            }
-            else
-            {
-	            if (event.mouseButton.button == Mouse::Left) grid.handleClick(mousePos, true);
-	            else if (event.mouseButton.button == Mouse::Right) grid.handleClick(mousePos, false);
+				default:
+				{
+                    if (event.mouseButton.button == Mouse::Left) grid.handleClick(mousePos, true);
+                    else if (event.mouseButton.button == Mouse::Right) grid.handleClick(mousePos, false);
+					break;
+				}
             }
         }
     }
@@ -111,11 +131,18 @@ void Game::update(Grid& grid)
 	//if all grids of catagory have been selected, reset them
     updateSelectedGrid();
 
+    static int solveCounter = 0;
     if (state == GameState::Game && grid.isSolved()) 
     {
-		//solved_grids[selected_index] = 1;
-        state = GameState::WinningNavigationMenu;
-        menu.navMenu();
+        solveCounter++;
+        if (solveCounter == 2)
+        {
+            this_thread::sleep_for(chrono::milliseconds(1000));
+            state = GameState::WinningNavigationMenu;
+            menu.navMenu();
+            solveCounter++;
+        }
+	    
     }
 }
 

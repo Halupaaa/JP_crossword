@@ -134,16 +134,14 @@ void Game::update(Grid& grid)
     static int solveCounter = 0;
     if (state == GameState::Game && grid.isSolved()) 
     {
-        solveCounter++;
-        if (solveCounter == 2)
+        if (++solveCounter == 2)
         {
             this_thread::sleep_for(chrono::milliseconds(1000));
             state = GameState::WinningNavigationMenu;
-            menu.navMenu();
-            solveCounter++;
         }
-	    
     }
+    else solveCounter = 0;
+
 }
 
 void Game::render(Grid& grid)

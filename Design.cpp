@@ -49,7 +49,7 @@ void Design::loadTextures()
 }
 
 
-void Design::applyStyle(GameStyle style)
+void Design::applyStyle(GameStyle& style)
 {
     switch (style)
     {

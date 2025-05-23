@@ -8,7 +8,7 @@ Button::Button()
 	Design::loadFonts();
 }
 
-Button::Button( const string& text, Vector2f buttonPos, Vector2f buttonSize)
+Button::Button(const string& text, Vector2f buttonPos, Vector2f buttonSize)
 {
     if (any_of(text.begin(), text.end(), ::isdigit)) 
     {
@@ -33,7 +33,7 @@ Button::Button( const string& text, Vector2f buttonPos, Vector2f buttonSize)
     box.setOutlineThickness(3);
 };
 
-bool Button::isClicked(Vector2i mousePos)
+bool Button::isClicked(const Vector2i& mousePos) const
 {
     return box.getGlobalBounds().contains((Vector2f)mousePos);
 }

@@ -14,7 +14,7 @@ public:
     Button();
     Button(const string& text, Vector2f buttonPos, Vector2f buttonSize);
 
-    bool isClicked(Vector2i mousePos);
+    bool isClicked(const Vector2i& mousePos) const;
 
     void draw();
 };

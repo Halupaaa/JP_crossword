@@ -30,7 +30,7 @@ public:
     void navMenu();
     void winNavMenu();
 
-    int handleClick(Vector2i mousePos);
+    int handleClick(Vector2i& mousePos);
 
-    void draw(GameState state);
+    void draw(GameState& state);
 };

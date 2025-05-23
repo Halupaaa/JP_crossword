@@ -39,5 +39,5 @@ struct Design
     static void loadTextures();
     static void loadFonts();
 
-    static void applyStyle(GameStyle style);
+    static void applyStyle(GameStyle& style);
 };

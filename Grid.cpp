@@ -51,7 +51,7 @@ bool Grid::isSolved()
 {
     for (int k = 0; k < 2; k++)
     {
-        for (const auto& vec : cur_result[k]) 
+        for (const vector<int>& vec : cur_result[k]) 
         {
             if (find(vec.begin(), vec.end(), 0) != vec.end()) 
 				return false;
@@ -119,7 +119,7 @@ bool Grid::maxExceedsHint (const vector<int>& result, const vector<int>& hint)
 
 void Grid::compareResultWithHints()
 {
-    for (int i = 0; i < field_width; ++i)
+    for (int i = 0; i < field_width; i++)
     {
         incorrect[0][i] = maxExceedsHint(cur_result[0][i], hints[0][i]); // стовпчик
         incorrect[1][i] = maxExceedsHint(cur_result[1][i], hints[1][i]); // рядок
@@ -165,7 +165,7 @@ void Grid::resultUpdate(int grid_x, int grid_y)
     isRowOrColumnSolved(grid_x, grid_y);
 }
 
-void Grid::handleClick(Vector2i mousePos, bool filled)
+void Grid::handleClick(Vector2i& mousePos, bool filled)
 {
     int col = (mousePos.x - center_pos.x) / cell_size;
     int row = (mousePos.y - center_pos.y) / cell_size;

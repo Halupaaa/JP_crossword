@@ -12,7 +12,6 @@ using namespace std;
 class Grid
 {
 private:
-    Font font;
 
     int field_width;
     float cell_size;
@@ -40,7 +39,7 @@ public:
     void compareResultWithHints();
     void resultUpdate(int grid_x, int grid_y);
 
-    void handleClick(Vector2i mousePos, bool fill);
+    void handleClick(Vector2i& mousePos, bool fill);
     void draw();
 };
 

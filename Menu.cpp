@@ -184,7 +184,7 @@ void Menu::winNavMenu()
 
 }
 
-int Menu::handleClick(Vector2i mousePos)
+int Menu::handleClick(Vector2i& mousePos)
 {
     if (gameStyleBtn.isClicked(mousePos)) return 0;
     else if (firstBtn.isClicked(mousePos)) return 1;
@@ -193,7 +193,7 @@ int Menu::handleClick(Vector2i mousePos)
 	else return -1;
 }
 
-void Menu::draw(GameState state)
+void Menu::draw(GameState& state)
 {
     switch (state)
     {

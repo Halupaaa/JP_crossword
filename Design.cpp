@@ -43,7 +43,7 @@ void Design::loadTextures()
 {
     for (int i = 0; i < 12; i++) 
     {
-        string filename = "pics/cadr" + std::to_string(i) + ".png";
+        string filename = "pics/cadr" + to_string(i) + ".png";
         BackgroundTexture[i].loadFromFile(filename);
     }
 }
